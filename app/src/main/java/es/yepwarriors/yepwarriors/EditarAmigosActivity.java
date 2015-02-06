@@ -47,6 +47,7 @@ public class EditarAmigosActivity extends ListActivity {
 
         mFriendsRelation.add(mUsers.get(position));
 
+
         //con esto guardo la relacion en la nube
         mCurrentUsers.saveInBackground(new SaveCallback() {
             @Override
