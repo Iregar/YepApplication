@@ -19,8 +19,5 @@ public class YepApplication extends Application {
         Parse.enableLocalDatastore(this);
 
         Parse.initialize(this, "KBQtwtA2c5lNQxlaOOwojZArFUUqWR6lq6ZV6Sey", "Yf2tBH4WBUy1G96ZpQvElpJbR8mo4iG3FkRld4P3");
-        ParseObject testObject = new ParseObject("TestObject");
-        testObject.put("foo", "bar");
-        testObject.saveInBackground();
     }
 }
