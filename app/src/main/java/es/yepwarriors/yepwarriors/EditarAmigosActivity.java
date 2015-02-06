@@ -21,9 +21,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class EditaramigosActivity extends ListActivity {
+public class EditarAmigosActivity extends ListActivity {
 
-    final static String TAG = EditaramigosActivity.class.getName();
+    final static String TAG = EditarAmigosActivity.class.getName();
     ProgressBar progressBar;
     List<ParseUser> mUsers;
     ArrayList <String> username;

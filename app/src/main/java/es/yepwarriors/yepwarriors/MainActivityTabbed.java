@@ -127,7 +127,7 @@ public class MainActivityTabbed extends ActionBarActivity implements ActionBar.T
             return true;
         }
         else if (id==R.id.action_edit_friends){
-            Intent intent = new Intent(this,EditaramigosActivity.class);
+            Intent intent = new Intent(this,EditarAmigosActivity.class);
             startActivity(intent);
         }
 
