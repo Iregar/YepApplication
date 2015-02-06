@@ -9,12 +9,13 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseRelation;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,12 +23,13 @@ import java.util.List;
 
 public class EditaramigosActivity extends ListActivity {
 
-        final static String TAG = EditaramigosActivity.class.getName();
+    final static String TAG = EditaramigosActivity.class.getName();
     ProgressBar progressBar;
     List<ParseUser> mUsers;
     ArrayList <String> username;
     ArrayAdapter <String> adapter;
-
+    ParseUser mCurrentUsers;
+    ParseRelation <ParseUser> mFriendsRelation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +44,21 @@ public class EditaramigosActivity extends ListActivity {
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-        Toast.makeText(this,username.get(position),Toast.LENGTH_SHORT).show();
+
+        mFriendsRelation.add(mUsers.get(position));
+
+        //con esto guardo la relacion en la nube
+        mCurrentUsers.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if(e==null){
+                    //genial
+                }else{
+                    Log.e(TAG,"error al guardar relacion");
+                }
+            }
+        });
+
     }
 
     @Override
@@ -55,6 +71,12 @@ public class EditaramigosActivity extends ListActivity {
         ParseQuery query = ParseUser.getQuery();
         query.orderByAscending(ParseConstant.USERNAME);
         query.setLimit(ParseConstant.MAX_USERS);
+
+        mCurrentUsers = ParseUser.getCurrentUser();
+
+        mFriendsRelation =mCurrentUsers.getRelation(ParseConstant.FRIENDS_RELATION);
+
+
 
         username = new ArrayList<String>();
         adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_checked,username);
