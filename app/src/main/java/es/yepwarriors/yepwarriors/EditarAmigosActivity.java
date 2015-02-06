@@ -30,6 +30,8 @@ public class EditarAmigosActivity extends ListActivity {
     ArrayAdapter <String> adapter;
     ParseUser mCurrentUsers;
     ParseRelation <ParseUser> mFriendsRelation;
+    ArrayList<String> ObjectsIds;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +47,16 @@ public class EditarAmigosActivity extends ListActivity {
     protected void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
 
-        mFriendsRelation.add(mUsers.get(position));
+        //compruebo si esta el usuario este pulsado o no y si esta maracdo lo añado
+        //sino lo borro
+
+      if(  getListView().isItemChecked(position)){
+          mFriendsRelation.add(mUsers.get(position));
+      }else{
+          mFriendsRelation.remove(mUsers.get(position));
+      }
+
+
 
 
         //con esto guardo la relacion en la nube
@@ -80,6 +91,9 @@ public class EditarAmigosActivity extends ListActivity {
 
 
         username = new ArrayList<String>();
+
+        ObjectsIds = new ArrayList<String>();
+
         adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_checked,username);
         setListAdapter(adapter);
 
@@ -89,8 +103,12 @@ public class EditarAmigosActivity extends ListActivity {
                 if (e == null) {
                     mUsers = users;
                     for(ParseUser user:mUsers){
+                        ObjectsIds.add(user.getObjectId());
                         adapter.add(user.getUsername());
                     }
+
+                    addFriendCheckmarks();
+
                     progressBar.setVisibility(View.INVISIBLE);
 
                 } else {
@@ -100,11 +118,25 @@ public class EditarAmigosActivity extends ListActivity {
         });
     }
 
+    //ver metodo para ver si nuestros alumnos estan marcados
 
+    private void addFriendCheckmarks() {
+        mFriendsRelation.getQuery().findInBackground(new FindCallback<ParseUser>() {
+            @Override
+            public void done(List<ParseUser> users, ParseException e) {
+            if(e == null){
+                for(ParseUser user:users){
+                    String userID = user.getObjectId();
+                    if(ObjectsIds.contains(user.getObjectId())){
+                        getListView().setItemChecked(ObjectsIds.indexOf(userID),true);
+                    }
 
+                }
 
-
-
+            }
+            }
+        });
+    }
 
 
     @Override
