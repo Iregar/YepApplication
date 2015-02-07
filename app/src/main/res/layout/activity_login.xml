@@ -1,125 +1,66 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/AuthBackground"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_fill"
     tools:context="es.yepwarriors.yepwarriors.LoginActivity">
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:id="@+id/backgroundimage"
-        android:src="@drawable/background"
-        android:scaleType="fitStart"
-        android:focusableInTouchMode="false"
-        android:contentDescription="@string/Imagedescription"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        style="@style/AuthBackgroundImage"
+        android:contentDescription="@string/desc_imagen_background" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/app_name"
         android:id="@+id/tittle"
-        android:textSize="60sp"
-        android:textColor="@android:color/white"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"/>
+        style="@style/AuthTitle"
+        android:text="@string/app_name" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/App_subtittle"
         android:id="@+id/subtittle"
-        android:layout_below="@+id/tittle"
-        android:layout_centerHorizontal="true"
-        android:textSize="40sp"
-        android:textColor="@android:color/white"
-        android:layout_marginTop="20dp"/>
+        style="@style/AuthSubTitle"
+        android:text="@string/App_subtittle" />
 
 
     <LinearLayout
         android:id="@+id/editTextLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_below="@+id/subtittle"
-        android:layout_marginTop="@dimen/LoginVerticalMarginright"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:paddingLeft="@dimen/Login_horizontal_padding"
-        android:paddingRight="@dimen/Login_horizontal_padding"
-        android:paddingTop="@dimen/LoginVerticalMarginright"
-        android:paddingBottom="@dimen/LoginVerticalMarginright"
-        android:background="@android:color/white"
-        >
-
-
-         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/txtUser"
-            android:hint="@string/Username_hint"
-            android:layout_above="@+id/txtPassword"
-            android:layout_alignLeft="@+id/backgroundimage"
-            android:layout_alignStart="@+id/backgroundimage"
-            android:textColorHint="@color/light_gray"
-            android:textSize="17sp"
-            android:background="@drawable/apptheme_edit_text_holo_light"/>
+        style="@style/AuthFieldContainer">
 
 
         <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:ems="10"
+            android:id="@+id/txtUser"
+            style="@style/AuthEditText"
+            android:hint="@string/username_hint" >
+            <requestFocus />
+        </EditText>
+
+
+        <EditText
             android:id="@+id/txtPassword"
-            android:hint="password"
-            android:layout_centerVertical="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="20dp"
-            android:textColorHint="@color/light_gray"
-            android:textSize="17sp"
-            android:background="@drawable/apptheme_edit_text_holo_light"/>
+            style="@style/AuthEditText"
+            android:hint="@string/password_hint"
+            android:inputType="textPassword" />
 
 
     </LinearLayout>
 
 
-
     <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/Botonlogin"
         android:id="@+id/btnLogin"
-        android:background="@drawable/button_custom"
         android:onClick="entrarLogin"
-        android:layout_below="@+id/editTextLayout"
-        android:layout_alignLeft="@+id/backgroundimage"
-        android:layout_alignStart="@+id/backgroundimage"
-        android:layout_marginTop="25dp"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:textSize="23sp"
-        android:textColor="@color/text_color"
-       />
+        android:text="@string/singin_button"
+        style="@style/AuthButton"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/editTextLayout"/>
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/not_account"
-        android:textColor="@android:color/white"
         android:id="@+id/txtNoAccount"
-        android:layout_marginTop="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:layout_below="@+id/btnLogin"
-        android:layout_alignLeft="@+id/backgroundimage"
-        android:layout_alignStart="@+id/backgroundimage" />
-
-
-
-
+        android:layout_marginTop="25dp"
+        android:text="@string/not_account"
+        android:textColor="@android:color/white" />
 
 
 </RelativeLayout>

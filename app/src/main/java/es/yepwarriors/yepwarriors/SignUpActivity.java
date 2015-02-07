@@ -131,4 +131,7 @@ public class SignUpActivity extends ActionBarActivity {
 
         return builder.create();
     }
+    public void cancel (View v){
+        finish();
+    }
 }
