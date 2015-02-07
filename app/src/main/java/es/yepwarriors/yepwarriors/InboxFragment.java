@@ -20,7 +20,7 @@ public class InboxFragment extends ListFragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
        //le cargo un layout al fragmento
-        View rootView = inflater.inflate(R.layout.fragment_main,container,false);
+        View rootView = inflater.inflate(R.layout.fragment_main_activity_tabbed,container,false);
 
         //le pongo un proges bar y lo oculto
            progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar);

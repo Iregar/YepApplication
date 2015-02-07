@@ -18,6 +18,6 @@ public class YepApplication extends Application {
         // Enable Local Datastore.
         Parse.enableLocalDatastore(this);
 
-        Parse.initialize(this, "KBQtwtA2c5lNQxlaOOwojZArFUUqWR6lq6ZV6Sey", "Yf2tBH4WBUy1G96ZpQvElpJbR8mo4iG3FkRld4P3");
+        Parse.initialize(this, "cgXn33mBRQ7HPq7nLZDDfHkNhAxVOYR9w35FsWQg", "ky8hxjuA374Q7cuGyP743S8PaDzd5Oyejorcuy9w");
     }
 }

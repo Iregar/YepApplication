@@ -26,50 +26,71 @@ public class FriendsFragment extends ListFragment{
 
     final static String TAG = FriendsFragment.class.getName();
 
-    ProgressBar progressBar;
-    ArrayList <String> username;
+    List<ParseUser> mUsers;
+    ArrayList<String> usernames;
+
     ArrayAdapter<String> adapter;
-    ParseUser mCurrentUsers;
+
+    ProgressBar spinner;
+
+    ParseUser mCurrentUser;
     ParseRelation<ParseUser> mFriendsRelation;
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.fragment_friends, container, false);
+
+        spinner = (ProgressBar)
+                rootView.findViewById(R.id.progressBar);
+        spinner.setVisibility(View.GONE);
+        return rootView;
+    }
 
     @Override
     public void onResume() {
         super.onResume();
-        mCurrentUsers = ParseUser.getCurrentUser();
-        username = new ArrayList<String>();
-        adapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_checked,username);
-        setListAdapter(adapter);
-        //recuperar todos los usuarios de la aplicacion PARSE
+
+        setListView();
+
+        mCurrentUser = ParseUser.getCurrentUser();
+
+        mFriendsRelation = mCurrentUser.getRelation(ParseConstant.FRIENDS_RELATION);
 
         ParseQuery query = ParseUser.getQuery();
         query.orderByAscending(ParseConstant.USERNAME);
-        query.setLimit(ParseConstant.MAX_USERS);
-        query.findInBackground(new FindCallback<ParseUser>() {
+
+
+        spinner.setVisibility(View.VISIBLE);
+
+
+        mFriendsRelation.getQuery().findInBackground(new FindCallback<ParseUser>() {
+
             @Override
             public void done(List<ParseUser> users, ParseException e) {
-                if (e == null) {
+                if(e == null){
+                    //sucess
+                    spinner.setVisibility(View.INVISIBLE);
+                    mUsers = users;
                     for(ParseUser user:users){
                         adapter.add(user.getUsername());
                     }
-                    progressBar.setVisibility(View.INVISIBLE);
 
-                } else {
-                    Log.e(TAG, "mierda!!!", e);
+                }
+                else{
+                    Log.e(TAG, "ParseException caught: ", e);
                 }
             }
         });
+
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    private void setListView() {
+        usernames= new ArrayList<String>();
 
-       //le cargo un layout al fragmento Fragmente Friends
-        View rootView = inflater.inflate(R.layout.fragment_friends,container,false);
+        adapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1,usernames);
+        setListAdapter(adapter);
 
-        //le pongo un proges bar y lo oculto
-           progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar);
-        progressBar.setVisibility(View.INVISIBLE);
 
-        return rootView;
     }
 }
