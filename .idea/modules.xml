@@ -2,13 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-      <module fileurl="file://$PROJECT_DIR$/YEPwarriors.iml" filepath="$PROJECT_DIR$/YEPwarriors.iml" />
->>>>>>> master
-=======
->>>>>>> master
       <module fileurl="file://$PROJECT_DIR$/YepApplication.iml" filepath="$PROJECT_DIR$/YepApplication.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
