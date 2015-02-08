@@ -19,12 +19,16 @@
         android:id="@+id/subtittle"
         style="@style/AuthSubTitle"
         android:text="@string/App_subtittle" />
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
 
     <LinearLayout
         android:id="@+id/editTextLayout"
         style="@style/AuthFieldContainer">
 
+<<<<<<< HEAD
 
         <EditText
             android:id="@+id/txtUser"
@@ -32,25 +36,42 @@
             android:hint="@string/username_hint" >
             <requestFocus />
         </EditText>
+=======
+        <EditText
+            android:id="@+id/txtUser"
+            style="@style/AuthEditText"
+            android:hint="@string/username_hint">
+>>>>>>> master
 
+            <requestFocus />
+        </EditText>
 
         <EditText
             android:id="@+id/txtPassword"
             style="@style/AuthEditText"
             android:hint="@string/password_hint"
             android:inputType="textPassword" />
+<<<<<<< HEAD
 
 
     </LinearLayout>
 
 
+=======
+    </LinearLayout>
+
+>>>>>>> master
     <Button
         android:id="@+id/btnLogin"
         android:onClick="entrarLogin"
         android:text="@string/singin_button"
         style="@style/AuthButton"
         android:layout_alignParentLeft="true"
+<<<<<<< HEAD
         android:layout_below="@+id/editTextLayout"/>
+=======
+        android:layout_below="@+id/editTextLayout" />
+>>>>>>> master
 
     <TextView
         android:id="@+id/txtNoAccount"
@@ -61,6 +82,10 @@
         android:layout_marginTop="25dp"
         android:text="@string/not_account"
         android:textColor="@android:color/white" />
+<<<<<<< HEAD
 
 
 </RelativeLayout>
+=======
+</RelativeLayout>
+>>>>>>> master

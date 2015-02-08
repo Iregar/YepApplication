@@ -52,7 +52,11 @@
         android:layout_below="@+id/editTextLayout"
         android:layout_centerHorizontal="true"
         android:src="@drawable/button_divider"
+<<<<<<< HEAD
         android:contentDescription="@string/button_divider"/>
+=======
+        android:contentDescription="@string/button_divider" />
+>>>>>>> master
 
     <Button
         android:id="@+id/btnSignUp"
@@ -62,7 +66,11 @@
         android:layout_below="@+id/editTextLayout"
         android:layout_alignParentLeft="true"
         android:layout_toLeftOf="@+id/btnDivider"
+<<<<<<< HEAD
         android:layout_marginRight="0px"/>
+=======
+        android:layout_marginRight="0px" />
+>>>>>>> master
 
     <Button
         android:id="@+id/btnCancel"
@@ -73,4 +81,8 @@
         android:layout_toRightOf="@+id/btnDivider"
         android:layout_marginLeft="0px"
         android:nestedScrollingEnabled="true" />
+<<<<<<< HEAD
 </RelativeLayout>
+=======
+</RelativeLayout>
+>>>>>>> master

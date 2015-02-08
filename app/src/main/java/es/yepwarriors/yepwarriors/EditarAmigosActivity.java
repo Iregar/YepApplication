@@ -28,9 +28,15 @@ public class EditarAmigosActivity extends ListActivity {
     List<ParseUser> mUsers;
     ArrayList <String> username;
     ArrayAdapter <String> adapter;
+<<<<<<< HEAD:app/src/main/java/es/yepwarriors/yepwarriors/EditaramigosActivity.java
     ArrayList <String> objectsIds;
     ParseUser mCurrentUsers;
     ParseRelation<ParseUser> mFriendsRelation;
+=======
+    ParseUser mCurrentUsers;
+    ParseRelation <ParseUser> mFriendsRelation;
+    ArrayList<String> ObjectsIds;
+>>>>>>> master:app/src/main/java/es/yepwarriors/yepwarriors/EditarAmigosActivity.java
 
 
     @Override
@@ -47,6 +53,7 @@ public class EditarAmigosActivity extends ListActivity {
     protected void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
 
+<<<<<<< HEAD:app/src/main/java/es/yepwarriors/yepwarriors/EditaramigosActivity.java
         if(getListView().isItemChecked(position)){
             mFriendsRelation.add(mUsers.get(position));
         }else{
@@ -55,10 +62,26 @@ public class EditarAmigosActivity extends ListActivity {
 
         mFriendsRelation.add(mUsers.get(position));
 
+=======
+        //compruebo si esta el usuario este pulsado o no y si esta maracdo lo añado
+        //sino lo borro
+
+      if(  getListView().isItemChecked(position)){
+          mFriendsRelation.add(mUsers.get(position));
+      }else{
+          mFriendsRelation.remove(mUsers.get(position));
+      }
+
+
+
+
+        //con esto guardo la relacion en la nube
+>>>>>>> master:app/src/main/java/es/yepwarriors/yepwarriors/EditarAmigosActivity.java
         mCurrentUsers.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
                 if(e==null){
+<<<<<<< HEAD:app/src/main/java/es/yepwarriors/yepwarriors/EditaramigosActivity.java
                     // Ha funcionado
                 }
                 else{
@@ -67,6 +90,15 @@ public class EditarAmigosActivity extends ListActivity {
 
             }
         });
+=======
+                    //genial
+                }else{
+                    Log.e(TAG,"error al guardar relacion");
+                }
+            }
+        });
+
+>>>>>>> master:app/src/main/java/es/yepwarriors/yepwarriors/EditarAmigosActivity.java
     }
 
     @Override
@@ -76,8 +108,20 @@ public class EditarAmigosActivity extends ListActivity {
 
 
 
+        mCurrentUsers = ParseUser.getCurrentUser();
+
+        mFriendsRelation =mCurrentUsers.getRelation(ParseConstant.FRIENDS_RELATION);
+
+
+
         username = new ArrayList<String>();
+<<<<<<< HEAD:app/src/main/java/es/yepwarriors/yepwarriors/EditaramigosActivity.java
         objectsIds = new ArrayList<String>();
+=======
+
+        ObjectsIds = new ArrayList<String>();
+
+>>>>>>> master:app/src/main/java/es/yepwarriors/yepwarriors/EditarAmigosActivity.java
         adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_checked,username);
         setListAdapter(adapter);
 
@@ -92,10 +136,19 @@ public class EditarAmigosActivity extends ListActivity {
                 if (e == null) {
                     mUsers = users;
                     for(ParseUser user:mUsers){
+<<<<<<< HEAD:app/src/main/java/es/yepwarriors/yepwarriors/EditaramigosActivity.java
                         objectsIds.add(user.getObjectId());
                         adapter.add(user.getUsername());
                     }
                     addFriendsCheckmarks();
+=======
+                        ObjectsIds.add(user.getObjectId());
+                        adapter.add(user.getUsername());
+                    }
+
+                    addFriendCheckmarks();
+
+>>>>>>> master:app/src/main/java/es/yepwarriors/yepwarriors/EditarAmigosActivity.java
                     progressBar.setVisibility(View.INVISIBLE);
 
                 } else {
@@ -105,6 +158,7 @@ public class EditarAmigosActivity extends ListActivity {
         });
     }
 
+<<<<<<< HEAD:app/src/main/java/es/yepwarriors/yepwarriors/EditaramigosActivity.java
     private void addFriendsCheckmarks() {
         mFriendsRelation.getQuery().findInBackground(new FindCallback<ParseUser>() {
             @Override
@@ -116,6 +170,24 @@ public class EditarAmigosActivity extends ListActivity {
                         }
                     }
                 }
+=======
+    //ver metodo para ver si nuestros alumnos estan marcados
+
+    private void addFriendCheckmarks() {
+        mFriendsRelation.getQuery().findInBackground(new FindCallback<ParseUser>() {
+            @Override
+            public void done(List<ParseUser> users, ParseException e) {
+            if(e == null){
+                for(ParseUser user:users){
+                    String userID = user.getObjectId();
+                    if(ObjectsIds.contains(user.getObjectId())){
+                        getListView().setItemChecked(ObjectsIds.indexOf(userID),true);
+                    }
+
+                }
+
+            }
+>>>>>>> master:app/src/main/java/es/yepwarriors/yepwarriors/EditarAmigosActivity.java
             }
         });
     }
