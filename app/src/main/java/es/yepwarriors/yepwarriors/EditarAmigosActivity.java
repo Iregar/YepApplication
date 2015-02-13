@@ -20,24 +20,15 @@ import com.parse.SaveCallback;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class EditarAmigosActivity extends ListActivity {
-
     final static String TAG = EditarAmigosActivity.class.getName();
     ProgressBar progressBar;
     List<ParseUser> mUsers;
-    ArrayList <String> username;
-    ArrayAdapter <String> adapter;
-<<<<<<< HEAD:app/src/main/java/es/yepwarriors/yepwarriors/EditaramigosActivity.java
-    ArrayList <String> objectsIds;
+    ArrayList<String> username;
+    ArrayAdapter<String> adapter;
     ParseUser mCurrentUsers;
     ParseRelation<ParseUser> mFriendsRelation;
-=======
-    ParseUser mCurrentUsers;
-    ParseRelation <ParseUser> mFriendsRelation;
     ArrayList<String> ObjectsIds;
->>>>>>> master:app/src/main/java/es/yepwarriors/yepwarriors/EditarAmigosActivity.java
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,112 +36,56 @@ public class EditarAmigosActivity extends ListActivity {
         setContentView(R.layout.activity_editaramigos);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-
-
     }
 
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-
-<<<<<<< HEAD:app/src/main/java/es/yepwarriors/yepwarriors/EditaramigosActivity.java
-        if(getListView().isItemChecked(position)){
+//compruebo si esta el usuario este pulsado o no y si esta maracdo lo añado
+//sino lo borro
+        if (getListView().isItemChecked(position)) {
             mFriendsRelation.add(mUsers.get(position));
-        }else{
+        } else {
             mFriendsRelation.remove(mUsers.get(position));
         }
-
-        mFriendsRelation.add(mUsers.get(position));
-
-=======
-        //compruebo si esta el usuario este pulsado o no y si esta maracdo lo añado
-        //sino lo borro
-
-      if(  getListView().isItemChecked(position)){
-          mFriendsRelation.add(mUsers.get(position));
-      }else{
-          mFriendsRelation.remove(mUsers.get(position));
-      }
-
-
-
-
-        //con esto guardo la relacion en la nube
->>>>>>> master:app/src/main/java/es/yepwarriors/yepwarriors/EditarAmigosActivity.java
+//con esto guardo la relacion en la nube
         mCurrentUsers.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
-                if(e==null){
-<<<<<<< HEAD:app/src/main/java/es/yepwarriors/yepwarriors/EditaramigosActivity.java
-                    // Ha funcionado
-                }
-                else{
-
-                }
-
-            }
-        });
-=======
-                    //genial
-                }else{
-                    Log.e(TAG,"error al guardar relacion");
+                if (e == null) {
+//genial
+                } else {
+                    Log.e(TAG, "error al guardar relacion");
                 }
             }
         });
-
->>>>>>> master:app/src/main/java/es/yepwarriors/yepwarriors/EditarAmigosActivity.java
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         progressBar.setVisibility(View.INVISIBLE);
-
-
-
-        mCurrentUsers = ParseUser.getCurrentUser();
-
-        mFriendsRelation =mCurrentUsers.getRelation(ParseConstant.FRIENDS_RELATION);
-
-
-
-        username = new ArrayList<String>();
-<<<<<<< HEAD:app/src/main/java/es/yepwarriors/yepwarriors/EditaramigosActivity.java
-        objectsIds = new ArrayList<String>();
-=======
-
-        ObjectsIds = new ArrayList<String>();
-
->>>>>>> master:app/src/main/java/es/yepwarriors/yepwarriors/EditarAmigosActivity.java
-        adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_checked,username);
-        setListAdapter(adapter);
-
-        //recuperar todos los usuarios de la aplicacion PARSE
-
+//recuperar todos los usuarios de la aplicacion PARSE
         ParseQuery query = ParseUser.getQuery();
         query.orderByAscending(ParseConstant.USERNAME);
         query.setLimit(ParseConstant.MAX_USERS);
+        mCurrentUsers = ParseUser.getCurrentUser();
+        mFriendsRelation = mCurrentUsers.getRelation(ParseConstant.FRIENDS_RELATION);
+        username = new ArrayList<String>();
+        ObjectsIds = new ArrayList<String>();
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, username);
+        setListAdapter(adapter);
         query.findInBackground(new FindCallback<ParseUser>() {
             @Override
-            public void done(List <ParseUser> users, ParseException e) {
+            public void done(List<ParseUser> users, ParseException e) {
                 if (e == null) {
                     mUsers = users;
-                    for(ParseUser user:mUsers){
-<<<<<<< HEAD:app/src/main/java/es/yepwarriors/yepwarriors/EditaramigosActivity.java
-                        objectsIds.add(user.getObjectId());
-                        adapter.add(user.getUsername());
-                    }
-                    addFriendsCheckmarks();
-=======
+                    for (ParseUser user : mUsers) {
                         ObjectsIds.add(user.getObjectId());
                         adapter.add(user.getUsername());
                     }
-
                     addFriendCheckmarks();
-
->>>>>>> master:app/src/main/java/es/yepwarriors/yepwarriors/EditarAmigosActivity.java
                     progressBar.setVisibility(View.INVISIBLE);
-
                 } else {
                     Log.e(TAG, "mierda!!!", e);
                 }
@@ -158,60 +93,40 @@ public class EditarAmigosActivity extends ListActivity {
         });
     }
 
-<<<<<<< HEAD:app/src/main/java/es/yepwarriors/yepwarriors/EditaramigosActivity.java
-    private void addFriendsCheckmarks() {
-        mFriendsRelation.getQuery().findInBackground(new FindCallback<ParseUser>() {
-            @Override
-            public void done(List<ParseUser> parseUsers, ParseException e) {
-                if(e==null){
-                    for(ParseUser user:parseUsers){
-                        if(objectsIds.contains(user.getObjectId())){
-                            getListView().setItemChecked(objectsIds.indexOf(user.getObjectId()),true);
-                        }
-                    }
-                }
-=======
     //ver metodo para ver si nuestros alumnos estan marcados
-
     private void addFriendCheckmarks() {
         mFriendsRelation.getQuery().findInBackground(new FindCallback<ParseUser>() {
             @Override
             public void done(List<ParseUser> users, ParseException e) {
-            if(e == null){
-                for(ParseUser user:users){
-                    String userID = user.getObjectId();
-                    if(ObjectsIds.contains(user.getObjectId())){
-                        getListView().setItemChecked(ObjectsIds.indexOf(userID),true);
+                if (e == null) {
+                    for (ParseUser user : users) {
+                        String userID = user.getObjectId();
+                        if (ObjectsIds.contains(user.getObjectId())) {
+                            getListView().setItemChecked(ObjectsIds.indexOf(userID), true);
+                        }
                     }
-
                 }
-
-            }
->>>>>>> master:app/src/main/java/es/yepwarriors/yepwarriors/EditarAmigosActivity.java
             }
         });
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+// Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_editaramigos, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+// Handle action bar item clicks here. The action bar will
+// automatically handle clicks on the Home/Up button, so long
+// as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
+//noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 }

@@ -108,12 +108,8 @@ public class SignUpActivity extends ActionBarActivity {
         builder.setIcon(android.R.drawable.ic_dialog_alert);
         return builder.create();
     }
-<<<<<<< HEAD
-    public void cancel (View v){
-=======
 
     public void cancel(View v) {
->>>>>>> master
         finish();
     }
 }
