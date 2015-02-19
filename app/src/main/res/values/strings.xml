@@ -32,5 +32,6 @@
     <string name="title_activity_editaramigos">EditaramigosActivity</string>
     <string name="desc_imagen_background">Image background</string>
     <string name="button_divider">Button divider</string>
+    <string name="opcion_camara">Cámara</string>
 
 </resources>
