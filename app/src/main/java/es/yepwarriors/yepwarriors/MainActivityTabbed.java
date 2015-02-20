@@ -286,6 +286,9 @@ public class MainActivityTabbed extends ActionBarActivity implements ActionBar.T
             } else {
                 //TODO añadimos un mensaje de error
             }
+            Intent intent = new Intent(this,ActivityRecipients.class);
+            intent.setData(mMediaUri);
+            startActivity(intent);
 
         } else if (resultCode != RESULT_CANCELED) {
 
