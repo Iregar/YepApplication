@@ -40,18 +40,19 @@ public class MainActivityTabbed extends ActionBarActivity implements ActionBar.T
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Establecemos el layout asociado a esta actividad
         setContentView(R.layout.activity_main_activity_tabbed);
 
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser == null) {
-            //creamos una Intent para abrir una activity
+            // Creamos una Intent para abrir una activity
             Intent intent = new Intent(this, LoginActivity.class);
 
-            //para crear y luego borrar(siempre van asociadas) FLAG_ACTIVITY_NEW_TASK) y(intent.FLAG_ACTIVITY_CLEAR
+            // Para crear y luego borrar(siempre van asociadas) FLAG_ACTIVITY_NEW_TASK) y(intent.FLAG_ACTIVITY_CLEAR
             // una bandera para decirle al login que es la última actividad
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            //la incializamos con el metodo startActivity
+            // La incializamos con el metodo startActivity
             startActivity(intent);
         }
 
