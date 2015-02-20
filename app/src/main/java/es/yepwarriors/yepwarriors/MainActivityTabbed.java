@@ -180,9 +180,11 @@ public class MainActivityTabbed extends ActionBarActivity implements ActionBar.T
 
         mMediaUri = FileUtilities.getOutputMediaFileUri(FileUtilities.MEDIA_TYPE_IMAGE);
         if (mMediaUri == null) {
+            Log.d(TAG, "mMediaUri == null");
             // En caso de no existir el directorio mostraríamos un error
             // TODO incluir cuadro de diálogo
         } else {
+            Log.d(TAG, "mMediaUri != null");
             // Le indicamos al intent dónde queremos que se guarde la imagen
             takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, mMediaUri);
             // Si el directorio no es nulo entonces arrancamos la actividad
@@ -198,9 +200,11 @@ public class MainActivityTabbed extends ActionBarActivity implements ActionBar.T
 
         mMediaUri = FileUtilities.getOutputMediaFileUri(FileUtilities.MEDIA_TYPE_VIDEO);
         if (mMediaUri == null) {
+            Log.d(TAG, "mMediaUri == null");
             // En caso de no existir el directorio mostraríamos un error
             // TODO incluir cuadro de diálogo
         } else {
+            Log.d(TAG, "mMediaUri != null");
             // Le indicamos al intent dónde queremos que se guarde la imagen
             takeVideoIntent.putExtra(MediaStore.EXTRA_OUTPUT, mMediaUri);
             // Limitamos el vídeo a 10 segundos
@@ -214,6 +218,7 @@ public class MainActivityTabbed extends ActionBarActivity implements ActionBar.T
 
     private void pickPhoto() {
         Log.d(MainActivityTabbed.TAG, "Elige una foto");
+
         Intent choosePhotoIntent = new Intent(Intent.ACTION_GET_CONTENT);
         choosePhotoIntent.setType("image/*");
         startActivityForResult(choosePhotoIntent, MainActivityTabbed.PICK_PHOTO_REQUEST);
@@ -286,9 +291,15 @@ public class MainActivityTabbed extends ActionBarActivity implements ActionBar.T
             } else {
                 //TODO añadimos un mensaje de error
             }
-            Intent intent = new Intent(this,ActivityRecipients.class);
-            intent.setData(mMediaUri);
-            startActivity(intent);
+            Intent recipientsIntent = new Intent(this,ActivityRecipients.class);
+            recipientsIntent.setData(mMediaUri);
+            String tipoFichero;
+            if(requestCode==PICK_PHOTO_REQUEST||requestCode==TAKE_PHOTO_REQUEST)
+                tipoFichero=ParseConstant.IMAGE_TYPE;
+            else
+                tipoFichero=ParseConstant.VIDEO_TYPE;
+            recipientsIntent.putExtra(ParseConstant.KEY_ID_TYPE_FILE,tipoFichero);
+            startActivity(recipientsIntent);
 
         } else if (resultCode != RESULT_CANCELED) {
 

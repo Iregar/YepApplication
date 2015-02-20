@@ -34,6 +34,7 @@
     <string name="button_divider">Button divider</string>
     <string name="option_camara">Cámara</string>
     <string name="empty_friends">You don´t have friends</string>
+    <string name="action_send">Send Friends</string>
 
     <string-array name="camera_choices">
         <item>Take a picture</item>
@@ -42,6 +43,7 @@
         <item>Pick a video</item>
     </string-array>
     <string name="title_activity_activity_recipients">Select Recipients</string>
+    <string name="title_activity_show_image">ShowImageActivity</string>
 
     <string name="hello_world">Hello world!</string>
 

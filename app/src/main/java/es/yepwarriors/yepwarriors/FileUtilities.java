@@ -7,6 +7,7 @@ import android.os.Environment;
 import android.util.Log;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -23,41 +24,55 @@ public class FileUtilities {
 
     public static Uri getOutputMediaFileUri(int mediaType) {
         if (isExternalStorageAvailable()) {
+            Log.d(TAG, "Nudo if " + isExternalStorageAvailable());
             File mediaStorageDir = null;
-            File appDir = null;
             // 1 Obtener el directorio del almacenamiento interno
+            Log.d(TAG, "Valor mediaType " + mediaType);
             switch (mediaType) {
                 case MEDIA_TYPE_IMAGE:
                     mediaStorageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+                    Log.d(TAG, "Valor mediaStorageDir image " + mediaStorageDir);
                     break;
                 case MEDIA_TYPE_VIDEO:
                     mediaStorageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES);
+                    Log.d(TAG, "Valor mediaStorageDir video " + mediaStorageDir);
                     break;
             }
             // 2 Crear el subdirectorio
-            appDir = new File(mediaStorageDir, APP_NAME);
-            if (!appDir.exists()) {
-                Log.d(TAG, "Directory" + appDir.getAbsolutePath() + "not create");
-                return null;
+            if (mediaStorageDir != null) {
+                File appDir=null;
+                appDir= new File(mediaStorageDir, APP_NAME);
+                Log.d(TAG,"appDir: "+ appDir);
+                if (!mediaStorageDir.exists()) {
+                    Log.d(TAG, appDir.getAbsolutePath() + " not exists");
+                    if (!mediaStorageDir.mkdirs()) {
+                        Log.d(TAG, "Directory " + appDir.getAbsolutePath() + " not created");
+                        return null;
+                    }
+                }
+                String fileName = "";
+                Date now = new Date();
+                String timestamp = new SimpleDateFormat(
+                        "yyyyMMdd_HHmmss", new Locale("es", "ES")).format(now);
+                switch (mediaType) {
+                    case MEDIA_TYPE_IMAGE:
+                        fileName = "IMG_" + timestamp + ".jpg";
+                        break;
+                    case MEDIA_TYPE_VIDEO:
+                        fileName = "VID_" + timestamp + ".mp4";
+                        break;
+                }
+                String pathFile = appDir.getAbsolutePath() +File.separator +fileName;
+                Log.d(TAG, "pathFile : " + pathFile);
+                File mediaFile = null;
+                mediaFile = new File(pathFile);
+                Log.d(TAG, "mediaFile.getAbsolutePath : " + mediaFile.getAbsolutePath());
+
+                if (mediaFile != null) {
+                    Log.d(TAG, "File : " + mediaFile.getAbsolutePath());
+                    return Uri.fromFile(mediaFile);
+                }
             }
-            // 3 Crear un nombre del fichero
-            String fileName = "";
-            Date nowDate = new Date();
-            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", new Locale("es", "ES")).format(nowDate);
-            switch (mediaType) {
-                case MEDIA_TYPE_IMAGE:
-                    fileName = "IMG_" + timeStamp + ".jpg";
-                    break;
-                case MEDIA_TYPE_VIDEO:
-                    fileName = "VID_" + timeStamp + ".mp4";
-                    break;
-            }
-            // 4 Crear un objeto File con el nombre del fichero
-            String pathFile = appDir.getAbsolutePath()+File.separator+fileName;
-            File mediaFile= new File(pathFile);
-            Log.d(TAG,"File: "+mediaFile.getAbsolutePath());
-            // 5 Devolver el URI del fichero
-            return Uri.fromFile(mediaFile);
         }
         return null;
     }
@@ -77,7 +92,7 @@ public class FileUtilities {
 
         builder.setMessage(message);
         builder.setTitle(cont.getResources().getText(R.string.dialog_error_title));
-        builder.setPositiveButton(android.R.string.ok,null);
+        builder.setPositiveButton(android.R.string.ok, null);
         builder.setIcon(android.R.drawable.ic_dialog_alert);
 
         return builder.create();

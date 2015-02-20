@@ -22,9 +22,12 @@ android {
 dependencies {
     compile 'com.android.support:appcompat-v7:21.0.3'
     compile 'com.parse.bolts:bolts-android:1.+'
+    compile 'com.squareup.picasso:picasso:2.5.0'
     compile fileTree(dir: 'libs', include: 'Parse-*.jar')
     compile files('libs/bolts-android-1.1.4.jar')
     compile files('libs/bolts-android-1.1.4-javadoc.jar')
     compile files('libs/ParseCrashReporting-1.8.1.jar')
     compile files('libs/Parse-1.8.1.jar')
+    compile files('libs/commons-io-2.4.jar')
+
 }

@@ -4,6 +4,11 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- Añadimos un nuevo permiso para poder escribir en la memoria externa -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <!-- Establecemos una nueva caracteristica que es poder acceder a la camara -->
+    <uses-feature android:name="android.hardware.camera2" />
 
     <application
         android:name=".YepApplication"
@@ -45,7 +50,18 @@
         <activity
             android:name=".ActivityRecipients"
             android:label="@string/title_activity_activity_recipients"
-            android:parentActivityName=".MainActivityTabbed" >
+            android:parentActivityName=".MainActivityTabbed"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Holo.Light.DarkActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="es.yepwarriors.yepwarriors.MainActivityTabbed" />
+        </activity>
+        <activity
+            android:name=".ShowImageActivity"
+            android:label="@string/title_activity_show_image"
+            android:parentActivityName=".MainActivityTabbed"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="es.yepwarriors.yepwarriors.MainActivityTabbed" />
