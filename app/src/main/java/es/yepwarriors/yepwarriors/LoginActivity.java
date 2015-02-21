@@ -1,6 +1,5 @@
 package es.yepwarriors.yepwarriors;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -53,38 +52,34 @@ public class LoginActivity extends ActionBarActivity {
 
     }
 
-      // OnClick Listener botón login
+    // OnClick Listener botón login
     public void entrarLogin(View view) {
         // El método trim() quita los espacios entre las palabras
         String sUsername = username.getText().toString().trim();
         String spassword = password.getText().toString().trim();
-       /* if (ParseUser.getCurrentUser() != null) {
-            ParseUser.logOut();
-        }*/
 
         // Ventana de progreso que se mostrará mientras se realiza el login
-        final ProgressDialog dialog =
+        final ProgressDialog pDialog =
                 ProgressDialog.show(this,
                         getString(R.string.loging_message),
                         getString(R.string.waiting_message), true);
 
         ParseUser.logInInBackground(sUsername, spassword,
                 new LogInCallback() {
-            @Override
-            public void done(ParseUser parseUser, ParseException e) {
-                if (parseUser != null) {
-                    Intent intent = new Intent(LoginActivity.this, MainActivityTabbed.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
-                    // Una vez que el usuario se ha logado oculto ventana progreso
-                    dialog.dismiss();
-                } else {
-                    AlertDialog dialog =
-                            Utiles.createErrorDialog(getString(R.string.ponDatos),LoginActivity.this);
-                }
-            }
-        });
+                    @Override
+                    public void done(ParseUser parseUser, ParseException e) {
+                        // Una vez que el usuario se ha logado oculto ventana progreso
+                        pDialog.dismiss();
+                        if (parseUser != null) {
+                            Intent intent = new Intent(LoginActivity.this, MainActivityTabbed.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
+                        } else {
+                            Utiles.createErrorDialog(getString(R.string.ponDatos), getString(R.string.alert_login), LoginActivity.this);
+                        }
+                    }
+                });
 
 
     }
