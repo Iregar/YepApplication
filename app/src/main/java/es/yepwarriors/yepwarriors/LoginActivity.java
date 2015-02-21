@@ -55,14 +55,14 @@ public class LoginActivity extends ActionBarActivity {
 
       // OnClick Listener botón login
     public void entrarLogin(View view) {
-        //con el trim quita los espacios entre las palabras
+        // El método trim() quita los espacios entre las palabras
         String sUsername = username.getText().toString().trim();
         String spassword = password.getText().toString().trim();
        /* if (ParseUser.getCurrentUser() != null) {
             ParseUser.logOut();
         }*/
 
-        // ventana de progreso
+        // Ventana de progreso que se mostrará mientras se realiza el login
         final ProgressDialog dialog =
                 ProgressDialog.show(this,
                         getString(R.string.loging_message),
@@ -77,29 +77,16 @@ public class LoginActivity extends ActionBarActivity {
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
-
-                    dialog.dismiss(); // oculto ventana progreso
+                    // Una vez que el usuario se ha logado oculto ventana progreso
+                    dialog.dismiss();
                 } else {
                     AlertDialog dialog =
-                            createErrorDialog(getString(R.string.ponDatos));
+                            Utiles.createErrorDialog(getString(R.string.ponDatos),LoginActivity.this);
                 }
             }
         });
 
 
-    }
-
-
-    private AlertDialog createErrorDialog(String message) {
-        AlertDialog.Builder builder
-                = new AlertDialog.Builder(this);
-
-        builder.setMessage(message);
-        builder.setTitle(getString(R.string.dialog_error_title));
-        builder.setPositiveButton(android.R.string.ok,null);
-        builder.setIcon(android.R.drawable.ic_dialog_alert);
-
-        return builder.create();
     }
 
 

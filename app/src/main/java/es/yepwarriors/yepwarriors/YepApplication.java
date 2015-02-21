@@ -3,7 +3,6 @@ package es.yepwarriors.yepwarriors;
 import android.app.Application;
 
 import com.parse.Parse;
-import com.parse.ParseObject;
 
 
 /**

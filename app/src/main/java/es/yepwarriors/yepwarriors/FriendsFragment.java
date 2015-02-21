@@ -45,9 +45,9 @@ public class FriendsFragment extends ListFragment {
         super.onResume();
         setListView();
         mCurrentUser = ParseUser.getCurrentUser();
-        mFriendsRelation = mCurrentUser.getRelation(ParseConstant.FRIENDS_RELATION);
+        mFriendsRelation = mCurrentUser.getRelation(Constantes.Users.FRIENDS_RELATION);
         ParseQuery query = ParseUser.getQuery();
-        query.orderByAscending(ParseConstant.USERNAME);
+        query.orderByAscending(Constantes.Users.FIELD_USERNAME);
         spinner.setVisibility(View.VISIBLE);
         mFriendsRelation.getQuery().findInBackground(new FindCallback<ParseUser>() {
             @Override

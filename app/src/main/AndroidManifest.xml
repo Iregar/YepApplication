@@ -4,6 +4,11 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- Añadimos un nuevo permiso para poder escribir/leer en la memoria externa -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!-- Establecemos una nueva caracteristica que es poder acceder a la camara -->
+    <uses-feature android:name="android.hardware.camera2" />
 
     <application
         android:name=".YepApplication"
@@ -11,9 +16,14 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+
+        <!-- Establecemos las actividades que componen nuestra aplicación para que puedan ser llamadas -->
         <activity
             android:name=".MainActivityTabbed"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:logo="@drawable/ic_launcher">
+
+            <!-- El filtro que añadimos a continuación es necesario para identificar que esta será la primera actividad que lanzaremos -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,22 +33,31 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"
-            android:screenOrientation="portrait" >
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".SignUpActivity"
             android:label="@string/title_activity_login"
             android:parentActivityName=".LoginActivity"
-            android:screenOrientation="portrait" >
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".EditarAmigosActivity"
             android:label="@string/title_activity_editaramigos"
+            android:parentActivityName=".MainActivityTabbed"
             android:screenOrientation="portrait"
-            android:parentActivityName=".MainActivityTabbed" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="es.yepwarriors.yepwarriors.MainActivityTabbed" />
+            android:theme="@android:style/Theme.Holo.Light.DarkActionBar" >
+        </activity>
+        <activity
+            android:name=".ActivityRecipients"
+            android:label="@string/title_activity_activity_recipients"
+            android:parentActivityName=".MainActivityTabbed"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Holo.Light.DarkActionBar" >
+        </activity>
+        <activity
+            android:name=".ShowImageActivity"
+            android:label="@string/title_activity_show_image"
+            android:parentActivityName=".MainActivityTabbed"
+            android:screenOrientation="portrait" >
         </activity>
     </application>
 

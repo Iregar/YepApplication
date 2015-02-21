@@ -1,12 +1,16 @@
 package es.yepwarriors.yepwarriors;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.provider.MediaStore;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -14,48 +18,50 @@ import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 
 public class MainActivityTabbed extends ActionBarActivity implements ActionBar.TabListener {
 
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
-    SectionsPagerAdapter mSectionsPagerAdapter;
 
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
+    private static final String TAG = MainActivityTabbed.class.getName();
+    private final static int TAKE_PHOTO_REQUEST = 0;
+    private final static int TAKE_VIDEO_REQUEST = 1;
+    private final static int PICK_PHOTO_REQUEST = 2;
+    private final static int PICK_VIDEO_REQUEST = 3;
+
+    private final static int LIMIT_DURATION_VIDEO = 10;
+    private final static int QUALITY_VIDEO = 0;
+    Uri mMediaUri;
     ViewPager mViewPager;
+    SectionsPagerAdapter mSectionsPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Establecemos el layout asociado a esta actividad
         setContentView(R.layout.activity_main_activity_tabbed);
 
         ParseUser currentUser = ParseUser.getCurrentUser();
-        if (currentUser == null){
-            //creamos una Intent para abrir una activity
-            Intent intent = new Intent(this,LoginActivity.class);
+        if (currentUser == null) {
+            // Creamos una Intent para abrir una activity
+            Intent intent = new Intent(this, LoginActivity.class);
 
-            //para crear y luego borrar(siempre van asociadas) FLAG_ACTIVITY_NEW_TASK) y(intent.FLAG_ACTIVITY_CLEAR
+            // Para crear y luego borrar(siempre van asociadas) FLAG_ACTIVITY_NEW_TASK) y(intent.FLAG_ACTIVITY_CLEAR
             // una bandera para decirle al login que es la última actividad
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            //la incializamos con el metodo startActivity
+            // La incializamos con el metodo startActivity
             startActivity(intent);
         }
 
         ParseUser.logInInBackground("Usuario", "contrasela", new LogInCallback() {
             @Override
             public void done(ParseUser parseUser, ParseException e) {
-                if (parseUser!=null){
+                if (parseUser != null) {
                     //estas logado
-                }else{
+                } else {
                     //error has metido mas el login
                 }
             }
@@ -67,7 +73,7 @@ public class MainActivityTabbed extends ActionBarActivity implements ActionBar.T
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),this);
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), this);
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -91,7 +97,8 @@ public class MainActivityTabbed extends ActionBarActivity implements ActionBar.T
             // this tab is selected.
             actionBar.addTab(
                     actionBar.newTab()
-                            .setText(mSectionsPagerAdapter.getPageTitle(i))
+                            .setIcon(mSectionsPagerAdapter.getIcon(i))
+                            //.setText(mSectionsPagerAdapter.getPageTitle(i))
                             .setTabListener(this));
         }
     }
@@ -117,21 +124,126 @@ public class MainActivityTabbed extends ActionBarActivity implements ActionBar.T
             return true;
         }
         //Boton para deslogarse me he creado en el menu un sign_out y en Strings tb
-        if (id == R.id.sign_out) {
+        else if (id == R.id.sign_out) {
             ParseUser.logOut();
             Intent i = new Intent(
                     MainActivityTabbed.this, LoginActivity.class);
-               i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-               i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(i);
             return true;
-        }
-        else if (id==R.id.action_edit_friends){
-            Intent intent = new Intent(this,EditarAmigosActivity.class);
+        } else if (id == R.id.action_edit_friends) {
+            Intent intent = new Intent(this, EditarAmigosActivity.class);
             startActivity(intent);
+        } else if (id == R.id.action_camera) {
+            dialogCameraChoices();
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void dialogCameraChoices() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setItems(R.array.camera_choices, mDialogListener());
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private DialogInterface.OnClickListener mDialogListener() {
+
+        return new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                switch (i) {
+                    case 0:
+                        takePhoto();
+                        break;
+                    case 1:
+                        takeVideo();
+                        break;
+                    case 2:
+                        pickPhoto();
+                        break;
+                    case 3:
+                        pickVideo();
+                        break;
+                }
+
+            }
+        };
+    }
+
+    private void takePhoto() {
+        Log.d(TAG, "Haz una foto");
+
+        // Creamos la instancia del intent que nos dará acceso a la cámara
+        Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        mMediaUri = FileUtilities.getOutputMediaFileUri(FileUtilities.MEDIA_TYPE_IMAGE);
+        if (mMediaUri == null) {
+            Log.d(TAG, "mMediaUri == null");
+            // En caso de no existir el directorio mostraríamos un error
+            // TODO incluir cuadro de diálogo
+        } else {
+            Log.d(TAG, "mMediaUri != null");
+            // Le indicamos al intent dónde queremos que se guarde la imagen
+            takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, mMediaUri);
+            // Si el directorio no es nulo entonces arrancamos la actividad
+            startActivityForResult(takePhotoIntent, TAKE_PHOTO_REQUEST);
+        }
+    }
+
+    private void takeVideo() {
+        Log.d(TAG, "Haz una video");
+
+        // Creamos la instancia del intent que nos dará acceso a la cámara
+        Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+
+        mMediaUri = FileUtilities.getOutputMediaFileUri(FileUtilities.MEDIA_TYPE_VIDEO);
+        if (mMediaUri == null) {
+            Log.d(TAG, "mMediaUri == null");
+            // En caso de no existir el directorio mostraríamos un error
+            // TODO incluir cuadro de diálogo
+        } else {
+            Log.d(TAG, "mMediaUri != null");
+            // Le indicamos al intent dónde queremos que se guarde la imagen
+            takeVideoIntent.putExtra(MediaStore.EXTRA_OUTPUT, mMediaUri);
+            // Limitamos el vídeo a 10 segundos
+            takeVideoIntent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, LIMIT_DURATION_VIDEO);
+            // Establecemos la calidad del vídeo (donde 0 es nula y 10 es la máxima)
+            takeVideoIntent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, QUALITY_VIDEO);
+            // Si el directorio no es nulo entonces arrancamos la actividad
+            startActivityForResult(takeVideoIntent, TAKE_VIDEO_REQUEST);
+        }
+    }
+
+    private void pickPhoto() {
+        Log.d(MainActivityTabbed.TAG, "Elige una foto");
+
+        Intent choosePhotoIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        choosePhotoIntent.setType("image/*");
+        startActivityForResult(choosePhotoIntent, MainActivityTabbed.PICK_PHOTO_REQUEST);
+    }
+
+    private void pickVideo() {
+        Log.d(TAG, "Elige un video");
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Escoge un vídeo de menos de 10Mb");
+        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Intent chooseVideoIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                chooseVideoIntent.setType("video/*");
+                startActivityForResult(chooseVideoIntent, PICK_VIDEO_REQUEST);
+            }
+        });
+        builder.setTitle("Cuidado");
+        builder.setIcon(android.R.drawable.ic_dialog_alert);
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
     }
 
     @Override
@@ -149,8 +261,49 @@ public class MainActivityTabbed extends ActionBarActivity implements ActionBar.T
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            // Solo enviamos la actualizacion si hemos hecho una foto/video
+            if (requestCode == TAKE_PHOTO_REQUEST || requestCode == TAKE_VIDEO_REQUEST) {
+                Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+                mediaScanIntent.setData(mMediaUri);
+                // Avisamos a todos los suscriptores de que hemos actualizado la galeria
+                sendBroadcast(mediaScanIntent);
+            } else if (data != null) {
+                mMediaUri = data.getData();
+                if (requestCode == PICK_VIDEO_REQUEST) {
+                    int fileSize = 0;
+                    int sizeMax = 10 * 1024 * 1024;
+                    InputStream inpurStream = null;
+                    try {
+                        inpurStream = getContentResolver().openInputStream(mMediaUri);
+                        fileSize = inpurStream.available();
+                        inpurStream.close();
+                    } catch (IOException e) {
 
+                    }
+                    if (fileSize > sizeMax) {
+                        //TODO mostrar cuadro de diálogo con error
+                        return;
+                    }
+                }
+            } else {
+                //TODO añadimos un mensaje de error
+            }
+            Intent recipientsIntent = new Intent(this,ActivityRecipients.class);
+            recipientsIntent.setData(mMediaUri);
+            String tipoFichero;
+            if(requestCode==PICK_PHOTO_REQUEST||requestCode==TAKE_PHOTO_REQUEST)
+                tipoFichero= Constantes.FileTypes.IMAGE;
+            else
+                tipoFichero= Constantes.FileTypes.VIDEO;
+            recipientsIntent.putExtra(Constantes.ParseClasses.Messages.KEY_FILE_TYPE,tipoFichero);
+            startActivity(recipientsIntent);
 
+        } else if (resultCode != RESULT_CANCELED) {
 
-
+        }
+    }
 }

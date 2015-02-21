@@ -9,7 +9,8 @@ import java.util.Locale;
 
 
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
-
+    public static final int INBOX_TAB = 0;
+    public static final int FRIENDS_TAB = 1;
     private static final int NUMBER_OF_TABS =2;
     Context context;
 
@@ -35,7 +36,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         // Show 3 total pages.
-        return 2;
+        return NUMBER_OF_TABS;
     }
 
     @Override
@@ -49,5 +50,15 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         }
         return null;
+    }
+
+    public int getIcon(int position) {
+        switch (position) {
+            case INBOX_TAB:
+                return R.drawable.ic_tab_inbox;
+            case FRIENDS_TAB:
+                return R.drawable.ic_tab_friends;
+        }
+        return R.drawable.ic_tab_inbox;
     }
 }

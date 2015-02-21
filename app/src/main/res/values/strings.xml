@@ -32,5 +32,18 @@
     <string name="title_activity_editaramigos">EditaramigosActivity</string>
     <string name="desc_imagen_background">Image background</string>
     <string name="button_divider">Button divider</string>
+    <string name="option_camara">Cámara</string>
+    <string name="empty_friends">You don´t have friends</string>
+    <string name="empty_messages">You don´t have messages</string>
+    <string name="action_send">Send Friends</string>
+    <string name="add_friends">Add/Edit Friends</string>
+    <string-array name="camera_choices">
+        <item>Take a picture</item>
+        <item>Take a video</item>
+        <item>Pick a picture</item>
+        <item>Pick a video</item>
+    </string-array>
+    <string name="title_activity_activity_recipients">Select Recipients</string>
+    <string name="title_activity_show_image">ShowImageActivity</string>
 
 </resources>
