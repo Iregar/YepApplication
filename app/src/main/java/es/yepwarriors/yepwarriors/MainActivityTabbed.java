@@ -97,7 +97,8 @@ public class MainActivityTabbed extends ActionBarActivity implements ActionBar.T
             // this tab is selected.
             actionBar.addTab(
                     actionBar.newTab()
-                            .setText(mSectionsPagerAdapter.getPageTitle(i))
+                            .setIcon(mSectionsPagerAdapter.getIcon(i))
+                            //.setText(mSectionsPagerAdapter.getPageTitle(i))
                             .setTabListener(this));
         }
     }
@@ -295,10 +296,10 @@ public class MainActivityTabbed extends ActionBarActivity implements ActionBar.T
             recipientsIntent.setData(mMediaUri);
             String tipoFichero;
             if(requestCode==PICK_PHOTO_REQUEST||requestCode==TAKE_PHOTO_REQUEST)
-                tipoFichero=ParseConstant.IMAGE_TYPE;
+                tipoFichero= Constantes.FileTypes.IMAGE;
             else
-                tipoFichero=ParseConstant.VIDEO_TYPE;
-            recipientsIntent.putExtra(ParseConstant.KEY_ID_TYPE_FILE,tipoFichero);
+                tipoFichero= Constantes.FileTypes.VIDEO;
+            recipientsIntent.putExtra(Constantes.ParseClasses.Messages.KEY_FILE_TYPE,tipoFichero);
             startActivity(recipientsIntent);
 
         } else if (resultCode != RESULT_CANCELED) {

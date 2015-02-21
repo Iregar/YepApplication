@@ -46,11 +46,10 @@ public class ActivityRecipients extends ListActivity {
         setContentView(R.layout.activity_activity_recipients);
 
         spinner = (ProgressBar) findViewById(R.id.progressBar);
-        spinner.setVisibility(View.GONE);
 
         Intent intent = getIntent();
         mMediaUri = intent.getData();
-        mTipoArchivo = intent.getStringExtra(ParseConstant.KEY_ID_TYPE_FILE);
+        mTipoArchivo = intent.getStringExtra(Constantes.ParseClasses.Messages.KEY_FILE_TYPE);
     }
 
 
@@ -72,7 +71,7 @@ public class ActivityRecipients extends ListActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_send) {
-            ParseObject message = createMessage();
+            ParseObject message = createMessage(mMediaUri, mTipoArchivo);
             if (message != null) {
                 sendMessage(message);
             } else {
@@ -99,25 +98,27 @@ public class ActivityRecipients extends ListActivity {
         });
     }
 
-    private ParseObject createMessage() {
-        ParseObject message = new ParseObject(ParseConstant.CLASS_MESSAGE);
+    private ParseObject createMessage(Uri mMediaUri, String mTipoArchivo) {
         // Nombre del archivo
         // Tipo de archivo (imagen o video)
         // Id del recipiente o recipientes
         // Nombre del receptor
-        message.put(ParseConstant.KEY_ID_SENDER, ParseUser.getCurrentUser().getObjectId());
-        message.put(ParseConstant.KEY_NAME_SENDER, ParseUser.getCurrentUser().getUsername());
-        message.put(ParseConstant.KEY_ID_RECIPIENT, getRecipientsIds());
+        ParseUser mCurrentUser = ParseUser.getCurrentUser();
+        ParseObject message = new ParseObject(Constantes.ParseClasses.Messages.CLASS);
+        message.put(Constantes.ParseClasses.Messages.KEY_ID_SENDER, mCurrentUser.getObjectId());
+        message.put(Constantes.ParseClasses.Messages.KEY_SENDER_NAME, mCurrentUser.getUsername());
+        message.put(Constantes.ParseClasses.Messages.KEY_ID_RECIPIENTS, getRecipientsIds());
         byte[] fileBytes = FileHelper.getByteArrayFromFile(this, mMediaUri);
         if (fileBytes != null) {
             // Si es una imagen la reducimos
-            if (mTipoArchivo.equals(ParseConstant.IMAGE_TYPE)) {
+            if (mTipoArchivo.equals(Constantes.FileTypes.IMAGE)) {
                 fileBytes = FileHelper.reduceImageForUpload(fileBytes);
             }
             // Guardamos el nombre del archivo
             String fileName = FileHelper.getFileName(this, mMediaUri, mTipoArchivo);
-            ParseFile fileParse = new ParseFile(fileName, fileBytes);
-            message.put(ParseConstant.KEY_ID_FILE, fileParse);
+            ParseFile pFile = new ParseFile(fileName, fileBytes);
+            message.put(Constantes.ParseClasses.Messages.KEY_FILE, pFile);
+            message.put(Constantes.ParseClasses.Messages.KEY_FILE_TYPE, mTipoArchivo);
         } else {
             // TODO implementar AlertDialog
         }
@@ -139,9 +140,9 @@ public class ActivityRecipients extends ListActivity {
         super.onResume();
         setListView();
         mCurrentUser = ParseUser.getCurrentUser();
-        mFriendsRelation = mCurrentUser.getRelation(ParseConstant.FRIENDS_RELATION);
+        mFriendsRelation = mCurrentUser.getRelation(Constantes.Users.FRIENDS_RELATION);
         ParseQuery query = ParseUser.getQuery();
-        query.orderByAscending(ParseConstant.USERNAME);
+        query.orderByAscending(Constantes.Users.FIELD_USERNAME);
         spinner.setVisibility(View.VISIBLE);
         mFriendsRelation.getQuery().findInBackground(new FindCallback<ParseUser>() {
             @Override

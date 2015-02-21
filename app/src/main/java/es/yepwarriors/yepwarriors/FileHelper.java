@@ -1,13 +1,10 @@
 package es.yepwarriors.yepwarriors;
 
-/**
- * Created by benjagarrido on 20/2/15.
- */
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.util.Log;
+
 import org.apache.commons.io.IOUtils;
 
 import java.io.ByteArrayOutputStream;
@@ -28,7 +25,7 @@ public class FileHelper {
         byte[] fileBytes = null;
         InputStream inStream = null;
         ByteArrayOutputStream outStream = null;
-// MediaStore (and general)
+        // MediaStore (and general)
         if (uri.getScheme().equals("content")) {
             try {
                 inStream = context.getContentResolver().openInputStream(uri);
@@ -55,7 +52,7 @@ public class FileHelper {
                 }
             }
         }
-// File
+        // File
         else {
             FileInputStream fileInput = null;
             try {
@@ -83,19 +80,19 @@ public class FileHelper {
         try {
             outputStream.close();
         } catch (IOException e) {
-// Intentionally blank
+            // Intentionally blank
         }
         return reducedData;
     }
 
     public static String getFileName(Context context, Uri uri, String fileType) {
         String fileName = "uploaded_file.";
-        if (fileType.equals(ParseConstant.IMAGE_TYPE)) {
+        if (fileType.equals(Constantes.FileTypes.IMAGE)) {
             fileName += "png";
         } else {
-// For video, we want to get the actual file extension
+            // For video, we want to get the actual file extension
             if (uri.getScheme().equals("content")) {
-// do it using the mime type
+                // do it using the mime type
                 String mimeType = context.getContentResolver().getType(uri);
                 int slashIndex = mimeType.indexOf("/");
                 String fileExtension = mimeType.substring(slashIndex + 1);

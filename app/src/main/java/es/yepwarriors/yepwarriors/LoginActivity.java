@@ -81,7 +81,7 @@ public class LoginActivity extends ActionBarActivity {
                     dialog.dismiss();
                 } else {
                     AlertDialog dialog =
-                            FileUtilities.createErrorDialog(getString(R.string.ponDatos),LoginActivity.this);
+                            Utiles.createErrorDialog(getString(R.string.ponDatos),LoginActivity.this);
                 }
             }
         });

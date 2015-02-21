@@ -3,7 +3,6 @@ package es.yepwarriors.yepwarriors;
 import android.app.ListActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -39,21 +38,34 @@ public class EditarAmigosActivity extends ListActivity {
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-//compruebo si esta el usuario este pulsado o no y si esta maracdo lo añado
-//sino lo borro
+        //compruebo si esta el usuario este pulsado o no y si esta maracdo lo añado
+        //sino lo borro
         if (getListView().isItemChecked(position)) {
             mFriendsRelation.add(mUsers.get(position));
         } else {
             mFriendsRelation.remove(mUsers.get(position));
         }
-//con esto guardo la relacion en la nube
+        //con esto guardo la relacion en la nube
         mCurrentUsers.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
                 if (e == null) {
-//genial
+                    //genial
                 } else {
                     Log.e(TAG, "error al guardar relacion");
                 }
@@ -65,12 +77,12 @@ public class EditarAmigosActivity extends ListActivity {
     protected void onResume() {
         super.onResume();
         progressBar.setVisibility(View.INVISIBLE);
-//recuperar todos los usuarios de la aplicacion PARSE
+        //recuperar todos los usuarios de la aplicacion PARSE
         ParseQuery query = ParseUser.getQuery();
-        query.orderByAscending(ParseConstant.USERNAME);
-        query.setLimit(ParseConstant.MAX_USERS);
+        query.orderByAscending(Constantes.Users.FIELD_USERNAME);
+        query.setLimit(Constantes.Users.MAX_USERS);
         mCurrentUsers = ParseUser.getCurrentUser();
-        mFriendsRelation = mCurrentUsers.getRelation(ParseConstant.FRIENDS_RELATION);
+        mFriendsRelation = mCurrentUsers.getRelation(Constantes.Users.FRIENDS_RELATION);
         username = new ArrayList<String>();
         ObjectsIds = new ArrayList<String>();
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, username);
@@ -108,25 +120,5 @@ public class EditarAmigosActivity extends ListActivity {
                 }
             }
         });
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-// Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_editaramigos, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-// Handle action bar item clicks here. The action bar will
-// automatically handle clicks on the Home/Up button, so long
-// as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-//noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 }

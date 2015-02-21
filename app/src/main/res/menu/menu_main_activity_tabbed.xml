@@ -12,18 +12,18 @@
     <item
         android:id="@+id/action_edit_friends"
         android:title="@string/Editaramigos"
-        android:orderInCategory="100"
+        android:orderInCategory="200"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/sign_out"
         android:title="@string/action_logout"
-        android:orderInCategory="100"
+        android:orderInCategory="300"
         app:showAsAction="never" />
 
     <item android:id="@+id/action_camera"
         android:title="@string/option_camara"
-        android:orderInCategory="100"
+        android:orderInCategory="400"
         android:icon="@drawable/ic_action_camera"
-        app:showAsAction="always"/>
+        app:showAsAction="ifRoom"/>
 </menu>

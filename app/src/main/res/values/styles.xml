@@ -1,9 +1,18 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="@style/_AppTheme" />
-
-    <!-- Customize your theme here. -->
+    <style name="AppTheme" parent="@style/_AppTheme">
+        <item name="colorControlNormal">@color/contrastColor</item>
+        <item name="colorControlActivated">@color/contrastColor</item>
+        <item name="android:listViewStyle">@style/LightPurpleBackground</item>
+        <item name="android:gridViewStyle">@style/LightPurpleBackground</item>
+        <item name="actionOverflowButtonStyle">@style/AppTheme.OverFlow</item>
+    </style>
+    <style name="AppTheme.OverFlow" parent="android:Widget.ActionButton.Overflow">
+        <item name="android:src">@drawable/ic_menu_overflow</item>
+    </style>
+    <style name="LightPurpleBackground">
+        <item name="android:background">@color/light_purple_button</item>
+    </style>
     <style name="_AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="android:editTextBackground">@drawable/apptheme_edit_text_holo_light</item>
     </style>
@@ -63,8 +72,6 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_above">@+id/txtPassword</item>
-        <item name="android:layout_alignLeft">@+id/backgroundimage</item>
-        <item name="android:layout_alignStart">@+id/backgroundimage</item>
         <item name="android:textColorHint">@color/light_gray</item>
         <item name="android:textSize">17sp</item>
         <item name="android:background">@drawable/apptheme_edit_text_holo_light</item>
@@ -73,13 +80,15 @@
     <style name="AuthButton">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/button_custom</item>
         <item name="android:layout_marginLeft">@dimen/activity_horizontal_margin</item>
         <item name="android:layout_marginRight">@dimen/activity_horizontal_margin</item>
-        <item name="android:background">@drawable/button_custom</item>
-        <item name="android:textColor">@color/text_color</item>
         <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/text_color</item>
+        <item name="android:buttonStyle">?android:borderlessButtonStyle</item>
     </style>
 
+    <attr name="borderlessButtonStyle" format="reference" />
 </resources>
 
 
