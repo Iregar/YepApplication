@@ -2,20 +2,23 @@ package es.yepwarriors.yepwarriors;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 
 /**
  * Created by benjagarrido on 21/2/15.
  */
 public class Utiles {
-    public static AlertDialog createErrorDialog(String message, Context cont) {
-        AlertDialog.Builder builder
-                = new AlertDialog.Builder(cont);
-
-        builder.setMessage(message);
-        builder.setTitle(cont.getResources().getText(R.string.dialog_error_title));
-        builder.setPositiveButton(android.R.string.ok, null);
-        builder.setIcon(android.R.drawable.ic_dialog_alert);
-
-        return builder.create();
+    public static void createErrorDialog(String message,String title, Context cont) {
+        AlertDialog alertDialog = new AlertDialog.Builder(cont).create();
+        alertDialog.setTitle(title);
+        alertDialog.setMessage(message);
+        alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.show();
     }
 }
