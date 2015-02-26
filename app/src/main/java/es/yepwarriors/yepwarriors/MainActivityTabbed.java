@@ -3,6 +3,8 @@ package es.yepwarriors.yepwarriors;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -44,6 +46,12 @@ public class MainActivityTabbed extends ActionBarActivity implements ActionBar.T
         setContentView(R.layout.activity_main_activity_tabbed);
 
         ParseUser currentUser = ParseUser.getCurrentUser();
+        //Esto es para personalizar el acitionbar de dentro de la app.
+
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(R.drawable.ic_launcher);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.rgb(130, 130, 130)));
+        getSupportActionBar().setStackedBackgroundDrawable(new ColorDrawable(Color.rgb(85,55,124)));
         if (currentUser == null) {
             // Creamos una Intent para abrir una activity
             Intent intent = new Intent(this, LoginActivity.class);
