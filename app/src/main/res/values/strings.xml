@@ -29,7 +29,7 @@
     <string name="App_subtittle">A new comunication concept!</string>
     <string name="MensajeFriends">Add friends to start</string>
     <string name="Editaramigos">Edit friends</string>
-    <string name="title_activity_editaramigos">EditaramigosActivity</string>
+    <string name="title_activity_editaramigos">Select your friends</string>
     <string name="desc_imagen_background">Image background</string>
     <string name="button_divider">Button divider</string>
     <string name="option_camara">Cámara</string>

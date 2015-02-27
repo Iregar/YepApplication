@@ -11,7 +11,7 @@
 
     <item
         android:id="@+id/action_edit_friends"
-        android:title="@string/Editaramigos"
+        android:title="@string/add_friends"
         android:orderInCategory="200"
         app:showAsAction="never" />
 

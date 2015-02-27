@@ -25,7 +25,7 @@ public class EditarAmigosActivity extends ListActivity {
     List<ParseUser> mUsers;
     ArrayList<String> username;
     ArrayAdapter<String> adapter;
-    ParseUser mCurrentUsers;
+    ParseUser mCurrentUser;
     ParseRelation<ParseUser> mFriendsRelation;
     ArrayList<String> ObjectsIds;
 
@@ -61,7 +61,7 @@ public class EditarAmigosActivity extends ListActivity {
             mFriendsRelation.remove(mUsers.get(position));
         }
         //con esto guardo la relacion en la nube
-        mCurrentUsers.saveInBackground(new SaveCallback() {
+        mCurrentUser.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
                 if (e == null) {
@@ -81,8 +81,8 @@ public class EditarAmigosActivity extends ListActivity {
         ParseQuery query = ParseUser.getQuery();
         query.orderByAscending(Constantes.Users.FIELD_USERNAME);
         query.setLimit(Constantes.Users.MAX_USERS);
-        mCurrentUsers = ParseUser.getCurrentUser();
-        mFriendsRelation = mCurrentUsers.getRelation(Constantes.Users.FRIENDS_RELATION);
+        mCurrentUser = ParseUser.getCurrentUser();
+        mFriendsRelation = mCurrentUser.getRelation(Constantes.Users.FRIENDS_RELATION);
         username = new ArrayList<String>();
         ObjectsIds = new ArrayList<String>();
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, username);
@@ -93,8 +93,9 @@ public class EditarAmigosActivity extends ListActivity {
                 if (e == null) {
                     mUsers = users;
                     for (ParseUser user : mUsers) {
-                        ObjectsIds.add(user.getObjectId());
-                        adapter.add(user.getUsername());
+                        if (!mCurrentUser.getUsername().equals(user.getUsername())) {
+                            adapter.add(user.getUsername());
+                        }
                     }
                     addFriendCheckmarks();
                     progressBar.setVisibility(View.INVISIBLE);
