@@ -1,8 +1,5 @@
 package es.yepwarriors.yepwarriors;
 
-/**
- * Created by ivan on 6/02/15.
- */
 public class Constantes {
     public static final class FileTypes {
         public final static String IMAGE = "image";

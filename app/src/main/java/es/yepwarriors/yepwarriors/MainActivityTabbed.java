@@ -32,7 +32,6 @@ public class MainActivityTabbed extends ActionBarActivity implements ActionBar.T
     private final static int TAKE_VIDEO_REQUEST = 1;
     private final static int PICK_PHOTO_REQUEST = 2;
     private final static int PICK_VIDEO_REQUEST = 3;
-
     private final static int LIMIT_DURATION_VIDEO = 10;
     private final static int QUALITY_VIDEO = 0;
     Uri mMediaUri;
@@ -52,6 +51,7 @@ public class MainActivityTabbed extends ActionBarActivity implements ActionBar.T
         getSupportActionBar().setIcon(R.drawable.ic_launcher);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.rgb(130, 130, 130)));
         getSupportActionBar().setStackedBackgroundDrawable(new ColorDrawable(Color.rgb(85,55,124)));
+
         if (currentUser == null) {
             // Creamos una Intent para abrir una activity
             Intent intent = new Intent(this, LoginActivity.class);

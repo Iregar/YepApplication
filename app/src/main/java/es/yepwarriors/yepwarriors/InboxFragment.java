@@ -49,8 +49,8 @@ public class InboxFragment extends ListFragment {
         FragmentActivity fAct = getActivity();
         final View progressBar = fAct.findViewById(R.id.progressBar);
         messages = new ArrayList<String>();
-        adapter = new ArrayAdapter<String>(fAct, android.R.layout.simple_list_item_1, messages);
-        setListAdapter(adapter);
+        //adapter = new ArrayAdapter<String>(fAct, android.R.layout.simple_list_item_1, messages);
+      //  setListAdapter(adapter);
         ParseUser pUser = ParseUser.getCurrentUser();
         ParseQuery<ParseObject> query = ParseQuery.getQuery(Constantes.ParseClasses.Messages.CLASS);
         query.whereEqualTo(Constantes.ParseClasses.Messages.KEY_ID_RECIPIENTS, pUser.getObjectId());
@@ -60,9 +60,10 @@ public class InboxFragment extends ListFragment {
             public void done(List<ParseObject> parseObjects, ParseException e) {
                 if (parseObjects != null) {
                     mMessages = parseObjects;
-                    for (ParseObject message : mMessages) {
-                        adapter.add(message.getString(Constantes.ParseClasses.Messages.KEY_SENDER_NAME));
-                    }
+                       // adapter.add(message.getString(Constantes.ParseClasses.Messages.KEY_SENDER_NAME));
+                    MessageAdapter adapter1  = new MessageAdapter(
+                            getListView().getContext(),mMessages);
+                    setListAdapter(adapter1);
                     progressBar.setVisibility(View.INVISIBLE);
                 } else {
 // TODO Message Error
