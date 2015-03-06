@@ -19,7 +19,7 @@
 
         <!-- Establecemos las actividades que componen nuestra aplicación para que puedan ser llamadas -->
         <activity
-            android:name=".MainActivityTabbed"
+            android:name=".Controlador.Activities.MainActivityTabbed"
             android:label="@string/app_name"
             android:logo="@drawable/ic_launcher">
 
@@ -31,32 +31,32 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name=".Controlador.Activities.LoginActivity"
             android:label="@string/title_activity_login"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".SignUpActivity"
+            android:name=".Controlador.Activities.SignUpActivity"
             android:label="@string/title_activity_login"
-            android:parentActivityName=".LoginActivity"
+            android:parentActivityName=".Controlador.Activities.LoginActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".EditarAmigosActivity"
+            android:name=".Controlador.Activities.EditarAmigosActivity"
             android:label="@string/title_activity_editaramigos"
-            android:parentActivityName=".MainActivityTabbed"
+            android:parentActivityName=".Controlador.Activities.MainActivityTabbed"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Holo.Light.DarkActionBar" >
         </activity>
         <activity
-            android:name=".ActivityRecipients"
+            android:name=".Controlador.Activities.ActivityRecipients"
             android:label="@string/title_activity_activity_recipients"
-            android:parentActivityName=".MainActivityTabbed"
+            android:parentActivityName=".Controlador.Activities.MainActivityTabbed"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Holo.Light.DarkActionBar" >
         </activity>
         <activity
             android:name=".ShowImageActivity"
             android:label="@string/title_activity_show_image"
-            android:parentActivityName=".MainActivityTabbed"
+            android:parentActivityName=".Controlador.Activities.MainActivityTabbed"
             android:screenOrientation="portrait" >
         </activity>
     </application>

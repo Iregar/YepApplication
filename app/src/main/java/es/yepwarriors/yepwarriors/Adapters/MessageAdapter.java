@@ -1,4 +1,4 @@
-package es.yepwarriors.yepwarriors;
+package es.yepwarriors.yepwarriors.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,7 +12,8 @@ import com.parse.ParseObject;
 
 import java.util.List;
 
-
+import es.yepwarriors.yepwarriors.Model.Constantes;
+import es.yepwarriors.yepwarriors.R;
 
 
 public class MessageAdapter extends ArrayAdapter<ParseObject>{
@@ -21,7 +22,7 @@ public class MessageAdapter extends ArrayAdapter<ParseObject>{
     protected List<ParseObject> mMessages;
 
     public MessageAdapter(Context context, List<ParseObject> messages){
-        super(context,R.layout.message_item, messages);
+        super(context, R.layout.message_item, messages);
         mContext = context;
         mMessages = messages;
     }

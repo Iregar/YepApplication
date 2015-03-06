@@ -1,4 +1,4 @@
-package es.yepwarriors.yepwarriors;
+package es.yepwarriors.yepwarriors.Utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -14,9 +14,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
-/**
- * Created by Carlos on 08/02/2015.
- */
+import es.yepwarriors.yepwarriors.Model.Constantes;
+
+
 public class FileHelper {
     final static String TAG = FileHelper.class.getName();
     public static final int SHORT_SIDE_TARGET = 1280;

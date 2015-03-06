@@ -1,7 +1,5 @@
-package es.yepwarriors.yepwarriors;
+package es.yepwarriors.yepwarriors.Utils;
 
-import android.app.AlertDialog;
-import android.content.Context;
 import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
@@ -11,15 +9,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-/**
- * Created by benjagarrido on 13/2/15.
- */
-public class FileUtilities {
-    final static int MEDIA_TYPE_IMAGE = 1;
-    final static int MEDIA_TYPE_VIDEO = 2;
 
-    private final static String APP_NAME = "YEP";
-    private final static String TAG = FileUtilities.class.getName();
+public class FileUtilities {
+   public final static int MEDIA_TYPE_IMAGE = 1;
+   public final static int MEDIA_TYPE_VIDEO = 2;
+
+    public final static String APP_NAME = "YEP";
+    public final static String TAG = FileUtilities.class.getName();
 
     public static Uri getOutputMediaFileUri(int mediaType) {
         if (isExternalStorageAvailable()) {

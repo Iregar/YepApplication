@@ -1,4 +1,4 @@
-package  es.yepwarriors.yepwarriors;
+package es.yepwarriors.yepwarriors.Adapters;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
@@ -6,6 +6,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.Locale;
+
+import es.yepwarriors.yepwarriors.Controlador.FriendsFragment;
+import es.yepwarriors.yepwarriors.Controlador.InboxFragment;
+import es.yepwarriors.yepwarriors.R;
 
 
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
@@ -24,7 +28,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         // getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment (defined as a static inner class below).
         if(position==0){
-            return new  InboxFragment();
+            return new InboxFragment();
         }else {
             return  new FriendsFragment();
 

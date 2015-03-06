@@ -1,4 +1,5 @@
-package es.yepwarriors.yepwarriors; /**
+package es.yepwarriors.yepwarriors.Utils;
+/**
  * Created by benjagarrido on 20/2/15.
  */
 

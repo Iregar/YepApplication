@@ -3,7 +3,7 @@
     style="@style/AuthBackground"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="es.yepwarriors.yepwarriors.SignUpActivity">
+    tools:context="es.yepwarriors.yepwarriors.Controlador.Activities.SignUpActivity">
 
     <ImageView
         android:id="@+id/backgroundimage"
