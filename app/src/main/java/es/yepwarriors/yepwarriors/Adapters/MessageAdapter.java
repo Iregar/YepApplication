@@ -1,6 +1,7 @@
 package es.yepwarriors.yepwarriors.Adapters;
 
 import android.content.Context;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.parse.ParseObject;
 
+import java.util.Date;
 import java.util.List;
 
 import es.yepwarriors.yepwarriors.Model.Constantes;
@@ -37,15 +39,20 @@ public class MessageAdapter extends ArrayAdapter<ParseObject>{
             holder = new Viewholder();
             holder.iconImageView = (ImageView) convertView.findViewById(R.id.messageIcon);
             holder.nameLabel = (TextView) convertView.findViewById(R.id.senderLabel);
-
+            holder.timeLabel = (TextView ) convertView.findViewById(R.id.timeLabel);
             convertView.setTag(holder);
         }
         else{
             holder= (Viewholder)convertView.getTag();
-
         }
 
         ParseObject message = mMessages.get(position);
+        Date createdAt = message.getCreatedAt();
+        long now = new Date().getTime();
+        String convertedDate = DateUtils.getRelativeTimeSpanString(createdAt.getTime(),
+                now, DateUtils.SECOND_IN_MILLIS).toString();
+
+        holder.timeLabel.setText(convertedDate);
 
         if(message.getString(Constantes.ParseClasses.Messages.KEY_FILE_TYPE).equals(Constantes.FileTypes.IMAGE)) {
             holder.iconImageView.setImageResource(R.drawable.ic_action_picture);
@@ -62,6 +69,9 @@ public class MessageAdapter extends ArrayAdapter<ParseObject>{
     public static class Viewholder{
         ImageView iconImageView;
         TextView nameLabel;
+        TextView timeLabel;
+
+
 
     }
 }

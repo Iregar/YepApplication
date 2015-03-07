@@ -7,12 +7,15 @@
         <item name="android:gridViewStyle">@style/LightPurpleBackground</item>
         <item name="actionOverflowButtonStyle">@style/AppTheme.OverFlow</item>
     </style>
+
     <style name="AppTheme.OverFlow" parent="android:Widget.ActionButton.Overflow">
         <item name="android:src">@drawable/ic_menu_overflow</item>
     </style>
+
     <style name="LightPurpleBackground">
         <item name="android:background">@color/light_purple_button</item>
     </style>
+
     <style name="_AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="android:editTextBackground">@drawable/apptheme_edit_text_holo_light</item>
     </style>
@@ -87,6 +90,8 @@
         <item name="android:textColor">@color/text_color</item>
         <item name="android:buttonStyle">?android:borderlessButtonStyle</item>
     </style>
+
+
 
     <attr name="borderlessButtonStyle" format="reference" />
 </resources>

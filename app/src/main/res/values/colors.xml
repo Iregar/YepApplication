@@ -9,4 +9,7 @@
     <color name="text_color">#250054</color>
     <color name="textColor">#351757</color>
     <color name="contrastColor">#FFC700</color>
+    <color name="LightPurpleBackground">#e9e4ed</color>
+
+
 </resources>
