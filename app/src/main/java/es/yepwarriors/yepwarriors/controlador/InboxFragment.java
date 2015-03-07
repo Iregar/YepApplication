@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.ListFragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,14 +25,19 @@ import es.yepwarriors.yepwarriors.Adapters.MessageAdapter;
 import es.yepwarriors.yepwarriors.R;
 import es.yepwarriors.yepwarriors.ShowImageActivity;
 
+import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
+import android.widget.Toast;
+
 /**
  * Created by ivan on 6/02/15.
  */
 public class InboxFragment extends ListFragment {
+    final static String TAG = InboxFragment.class.getName();
     private static final String ARG_SECTION_NUMBER = "section_number";
     private List<ParseObject> mMessages;
     private ArrayList<String> messages;
     private ArrayAdapter<String> adapter;
+    protected SwipeRefreshLayout mSwipeRefreshLayout;
     /**
      * Returns a new instance of this fragment for the given section
      * number.
@@ -45,17 +51,25 @@ public class InboxFragment extends ListFragment {
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_inbox, container, false);
+
+        mSwipeRefreshLayout = (SwipeRefreshLayout)rootView.findViewById(R.id.swipeRefreshLayout);
+        mSwipeRefreshLayout.setOnRefreshListener(mOnRefreshListener);
+
         return rootView;
     }
     @Override
     public void onResume() {
         super.onResume();
         FragmentActivity fAct = getActivity();
-        final View progressBar = fAct.findViewById(R.id.progressBar);
+
         messages = new ArrayList<String>();
-        //adapter = new ArrayAdapter<String>(fAct, android.R.layout.simple_list_item_1, messages);
-      //  setListAdapter(adapter);
+
+        retrieveMessages(fAct);
+    }
+
+    private void retrieveMessages(FragmentActivity fAct) {
+        final View progressBar = fAct.findViewById(R.id.progressBar);
         ParseUser pUser = ParseUser.getCurrentUser();
         ParseQuery<ParseObject> query = ParseQuery.getQuery(Constantes.ParseClasses.Messages.CLASS);
         query.whereEqualTo(Constantes.ParseClasses.Messages.KEY_ID_RECIPIENTS, pUser.getObjectId());
@@ -63,11 +77,14 @@ public class InboxFragment extends ListFragment {
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> parseObjects, ParseException e) {
+                if(mSwipeRefreshLayout.isRefreshing()){
+                    mSwipeRefreshLayout.setRefreshing(false);
+                }
                 if (parseObjects != null) {
                     mMessages = parseObjects;
-                       // adapter.add(message.getString(Constantes.ParseClasses.Messages.KEY_SENDER_NAME));
-                    MessageAdapter adapter1  = new MessageAdapter(
-                            getListView().getContext(),mMessages);
+                    // adapter.add(message.getString(Constantes.ParseClasses.Messages.KEY_SENDER_NAME));
+                    MessageAdapter adapter1 = new MessageAdapter(
+                            getListView().getContext(), mMessages);
                     setListAdapter(adapter1);
                     progressBar.setVisibility(View.INVISIBLE);
                 } else {
@@ -76,6 +93,7 @@ public class InboxFragment extends ListFragment {
             }
         });
     }
+
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
@@ -91,5 +109,13 @@ public class InboxFragment extends ListFragment {
             //Intent intent = new Intent(Intent.ACTION_VIEW);
         }
     }
+
+    protected OnRefreshListener mOnRefreshListener =new OnRefreshListener(){
+        @Override
+        public void onRefresh() {
+            //Toast.makeText(getActivity(),"We´e refreshing!",Toast.LENGTH_SHORT).show();
+            retrieveMessages(getActivity());
+        }
+    };
 }
 
