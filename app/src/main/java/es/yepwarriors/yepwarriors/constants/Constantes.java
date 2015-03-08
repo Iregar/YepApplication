@@ -1,4 +1,4 @@
-package es.yepwarriors.yepwarriors.Model;
+package es.yepwarriors.yepwarriors.constants;
 
 public class Constantes {
     public static final class FileTypes {
