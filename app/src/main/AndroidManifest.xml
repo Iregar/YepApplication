@@ -19,9 +19,9 @@
 
         <!-- Establecemos las actividades que componen nuestra aplicación para que puedan ser llamadas -->
         <activity
-            android:name=".Controlador.Activities.MainActivityTabbed"
+            android:name=".ui.MainActivityTabbed"
             android:label="@string/app_name"
-            android:logo="@drawable/ic_launcher">
+            android:logo="@drawable/ic_launcher" >
 
             <!-- El filtro que añadimos a continuación es necesario para identificar que esta será la primera actividad que lanzaremos -->
             <intent-filter>
@@ -31,33 +31,37 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Controlador.Activities.LoginActivity"
+            android:name=".ui.LoginActivity"
             android:label="@string/title_activity_login"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Controlador.Activities.SignUpActivity"
+            android:name=".ui.SignUpActivity"
             android:label="@string/title_activity_login"
-            android:parentActivityName=".Controlador.Activities.LoginActivity"
+            android:parentActivityName=".ui.LoginActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Controlador.Activities.EditarAmigosActivity"
+            android:name=".ui.EditFriendsActivity"
             android:label="@string/title_activity_editaramigos"
-            android:parentActivityName=".Controlador.Activities.MainActivityTabbed"
+            android:parentActivityName=".ui.MainActivityTabbed"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Holo.Light.DarkActionBar" >
         </activity>
         <activity
-            android:name=".Controlador.Activities.ActivityRecipients"
+            android:name=".ui.RecipientsActivity"
             android:label="@string/title_activity_activity_recipients"
-            android:parentActivityName=".Controlador.Activities.MainActivityTabbed"
+            android:parentActivityName=".ui.MainActivityTabbed"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Holo.Light.DarkActionBar" >
         </activity>
         <activity
             android:name=".ShowImageActivity"
             android:label="@string/title_activity_show_image"
-            android:parentActivityName=".Controlador.Activities.MainActivityTabbed"
+            android:parentActivityName=".ui.MainActivityTabbed"
             android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".adapters.UserAdapter"
+            android:label="@string/title_activity_user_adapter" >
         </activity>
     </application>
 

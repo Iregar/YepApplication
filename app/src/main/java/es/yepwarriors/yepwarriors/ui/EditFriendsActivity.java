@@ -5,21 +5,25 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseRelation;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import es.yepwarriors.yepwarriors.Adapters.UserAdapter;
-import es.yepwarriors.yepwarriors.Model.Constantes;
+import es.yepwarriors.yepwarriors.adapters.UserAdapter;
+import es.yepwarriors.yepwarriors.constants.Constantes;
 import es.yepwarriors.yepwarriors.R;
 
 public class EditFriendsActivity extends Activity {
@@ -38,8 +42,11 @@ public class EditFriendsActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_grid);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
+
         mGridView=(GridView)findViewById(R.id.friendsGrid);
         mGridView.setChoiceMode(GridView.CHOICE_MODE_MULTIPLE);
+        mGridView.setOnItemClickListener(mOnItemClickListener);
+
         TextView emptyTextView = (TextView)findViewById(android.R.id.empty);
         mGridView.setEmptyView(emptyTextView);
     }
@@ -57,41 +64,19 @@ public class EditFriendsActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-//    @Override
-//    protected void onListItemClick(ListView l, View v, int position, long id) {
-//        super.onListItemClick(l, v, position, id);
-//        //compruebo si esta el usuario este pulsado o no y si esta maracdo lo añado
-//        //sino lo borro
-//        if (getListView().isItemChecked(position)) {
-//            mFriendsRelation.add(mUsers.get(position));
-//        } else {
-//            mFriendsRelation.remove(mUsers.get(position));
-//        }
-//        //con esto guardo la relacion en la nube
-//        mCurrentUser.saveInBackground(new SaveCallback() {
-//            @Override
-//            public void done(ParseException e) {
-//                if (e == null) {
-//                    //genial
-//                } else {
-//                    Log.e(TAG, "error al guardar relacion");
-//                }
-//            }
-//        });
-//    }
-
     @Override
     protected void onResume() {
         super.onResume();
         progressBar.setVisibility(View.INVISIBLE);
-        //recuperar todos los usuarios de la aplicacion PARSE
+
+        mCurrentUser = ParseUser.getCurrentUser();
+        mFriendsRelation = mCurrentUser.getRelation(Constantes.Users.FRIENDS_RELATION);
+
         ParseQuery query = ParseUser.getQuery();
         query.orderByAscending(Constantes.Users.FIELD_USERNAME);
         query.setLimit(Constantes.Users.MAX_USERS);
-        mCurrentUser = ParseUser.getCurrentUser();
-        mFriendsRelation = mCurrentUser.getRelation(Constantes.Users.FRIENDS_RELATION);
-        username = new ArrayList<String>();
-        ObjectsIds = new ArrayList<String>();
+        //username = new ArrayList<String>();
+        //ObjectsIds = new ArrayList<String>();
 
         //adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, username);
         //setListAdapter(adapter);
@@ -127,16 +112,46 @@ public class EditFriendsActivity extends Activity {
     private void addFriendCheckmarks() {
         mFriendsRelation.getQuery().findInBackground(new FindCallback<ParseUser>() {
             @Override
-            public void done(List<ParseUser> users, ParseException e) {
+            public void done(List<ParseUser> friends, ParseException e) {
                 if (e == null) {
-                    for (ParseUser user : users) {
-                        String userID = user.getObjectId();
-                        if (ObjectsIds.contains(user.getObjectId())) {
-                            mGridView.setItemChecked(ObjectsIds.indexOf(userID), true);
+                    for (int i =0;i<mUsers.size();i++){
+                        ParseUser user = mUsers.get(i);
+                        for (ParseUser friend : friends) {
+                            if (friend.getObjectId().equals(user.getObjectId())) {
+                                mGridView.setItemChecked(i, true);
+                            }
                         }
                     }
+                }
+                else{
+                    Log.e(TAG, "mierda!!!", e);
                 }
             }
         });
     }
+
+    protected OnItemClickListener mOnItemClickListener = new OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+            ImageView checkImageView = (ImageView)view.findViewById(R.id.checkImageView);
+            //compruebo si esta el usuario este pulsado o no y si esta maracdo lo añado
+            //sino lo borro
+            if (mGridView.isItemChecked(position)) {
+                mFriendsRelation.add(mUsers.get(position));
+                checkImageView.setVisibility(View.VISIBLE);
+            } else {
+                mFriendsRelation.remove(mUsers.get(position));
+                checkImageView.setVisibility(View.INVISIBLE);
+            }
+            //con esto guardo la relacion en la nube
+            mCurrentUser.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e != null) {
+                        Log.e(TAG, "error al guardar relacion");
+                    }
+                }
+            });
+        }
+    };
 }

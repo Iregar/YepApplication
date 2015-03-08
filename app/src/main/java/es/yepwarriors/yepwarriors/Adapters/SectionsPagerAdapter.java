@@ -1,4 +1,4 @@
-package es.yepwarriors.yepwarriors.Adapters;
+package es.yepwarriors.yepwarriors.adapters;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
@@ -7,8 +7,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.Locale;
 
-import es.yepwarriors.yepwarriors.Controlador.FriendsFragment;
-import es.yepwarriors.yepwarriors.Controlador.InboxFragment;
+import es.yepwarriors.yepwarriors.ui.FriendsFragment;
+import es.yepwarriors.yepwarriors.ui.InboxFragment;
 import es.yepwarriors.yepwarriors.R;
 
 

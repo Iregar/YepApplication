@@ -15,8 +15,6 @@ import com.parse.ParseUser;
 
 import es.yepwarriors.yepwarriors.R;
 import es.yepwarriors.yepwarriors.Utiles;
-import es.yepwarriors.yepwarriors.ui.Activities.MainActivityTabbed;
-import es.yepwarriors.yepwarriors.ui.Activities.SignUpActivity;
 
 
 public class LoginActivity extends ActionBarActivity {

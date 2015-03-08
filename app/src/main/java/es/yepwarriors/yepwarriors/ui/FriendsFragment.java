@@ -16,11 +16,10 @@ import com.parse.ParseQuery;
 import com.parse.ParseRelation;
 import com.parse.ParseUser;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import es.yepwarriors.yepwarriors.Model.Constantes;
-import es.yepwarriors.yepwarriors.Adapters.UserAdapter;
+import es.yepwarriors.yepwarriors.constants.Constantes;
+import es.yepwarriors.yepwarriors.adapters.UserAdapter;
 import es.yepwarriors.yepwarriors.R;
 
 
@@ -29,8 +28,7 @@ Fragmento en el que aparecen nuestros amigos cargados
  */
 public class FriendsFragment extends Fragment {
     final static String TAG = FriendsFragment.class.getName();
-    List<ParseUser> mUsers;
-    ArrayList<String> usernames;
+    List<ParseUser> mFriends;
     UserAdapter adapter;
     ProgressBar spinner;
     ParseUser mCurrentUser;
@@ -68,25 +66,25 @@ public class FriendsFragment extends Fragment {
 
         mFriendsRelation.getQuery().findInBackground(new FindCallback<ParseUser>() {
             @Override
-            public void done(List<ParseUser> users, ParseException e) {
+            public void done(List<ParseUser> friends, ParseException e) {
                 if (e == null) {
-//sucess
-                    spinner.setVisibility(View.INVISIBLE);
-                    mUsers = users;
 
-                    String[] usernames = new String[mUsers.size()];
+                    spinner.setVisibility(View.INVISIBLE);
+                    mFriends = friends;
+
+                    String[] usernames = new String[mFriends.size()];
                     int i = 0;
-                    for(ParseUser user : mUsers) {
+                    for(ParseUser user : mFriends) {
                         usernames[i] = user.getUsername();
                         i++;
                     }
                     if (mGridView.getAdapter() == null) {
-                        adapter = new UserAdapter(getActivity(), mUsers);
+                        UserAdapter adapter = new UserAdapter(getActivity(), mFriends);
                         mGridView.setAdapter(adapter);
-                    } else {
-                        ((UserAdapter)mGridView.getAdapter()).refill(mUsers);
                     }
-                    mGridView.setAdapter(adapter);
+                    else {
+                        ((UserAdapter)mGridView.getAdapter()).refill(mFriends);
+                    }
                 } else {
                     Log.e(TAG, "ParseException caught: ", e);
                     //TODO Mostrar cuadro de dialogo

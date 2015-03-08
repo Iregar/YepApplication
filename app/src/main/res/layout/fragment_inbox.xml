@@ -17,7 +17,8 @@
             android:id="@android:id/list"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
+            android:clipToPadding="false"
+            android:paddingBottom="@dimen/message_inbox_vertical_margin"
             />
     </android.support.v4.widget.SwipeRefreshLayout>
 

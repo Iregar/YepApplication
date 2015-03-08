@@ -23,11 +23,10 @@ import com.parse.ParseUser;
 import java.io.IOException;
 import java.io.InputStream;
 
-import es.yepwarriors.yepwarriors.Model.Constantes;
+import es.yepwarriors.yepwarriors.constants.Constantes;
 import es.yepwarriors.yepwarriors.R;
-import es.yepwarriors.yepwarriors.Adapters.SectionsPagerAdapter;
-import es.yepwarriors.yepwarriors.Utils.FileUtilities;
-import es.yepwarriors.yepwarriors.ui.Activities.RecipientsActivity;
+import es.yepwarriors.yepwarriors.adapters.SectionsPagerAdapter;
+import es.yepwarriors.yepwarriors.utils.FileUtilities;
 
 
 public class MainActivityTabbed extends ActionBarActivity implements ActionBar.TabListener {
@@ -48,7 +47,7 @@ public class MainActivityTabbed extends ActionBarActivity implements ActionBar.T
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Establecemos el layout asociado a esta actividad
-        setContentView(R.layout.activity_main_activity_tabbed);
+        setContentView(R.layout.activity_main);
 
         ParseUser currentUser = ParseUser.getCurrentUser();
         //Esto es para personalizar el acitionbar de dentro de la app.

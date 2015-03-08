@@ -1,17 +1,20 @@
 package es.yepwarriors.yepwarriors.ui;
 
-import android.app.ListActivity;
-import android.content.Intent;
+import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
+import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -25,24 +28,24 @@ import com.parse.SaveCallback;
 import java.util.ArrayList;
 import java.util.List;
 
-import es.yepwarriors.yepwarriors.Model.Constantes;
+import es.yepwarriors.yepwarriors.adapters.UserAdapter;
+import es.yepwarriors.yepwarriors.constants.Constantes;
 import es.yepwarriors.yepwarriors.R;
-import es.yepwarriors.yepwarriors.Utils.FileHelper;
+import es.yepwarriors.yepwarriors.utils.FileHelper;
 
 
-public class RecipientsActivity extends ListActivity {
+public class RecipientsActivity extends Activity {
 
     final static String TAG = RecipientsActivity.class.getName();
 
     ParseUser mCurrentUser;
     ParseRelation<ParseUser> mFriendsRelation;
     ProgressBar spinner;
-    ArrayList<String> usernames;
-    ArrayAdapter<String> adapter;
     List<ParseUser> mFriends;
     MenuItem mSendMenuItem;
     private Uri mMediaUri;
     private String mTipoArchivo;
+    protected GridView mGridView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +54,15 @@ public class RecipientsActivity extends ListActivity {
 
         spinner = (ProgressBar) findViewById(R.id.progressBar);
 
-        Intent intent = getIntent();
-        mMediaUri = intent.getData();
-        mTipoArchivo = intent.getStringExtra(Constantes.ParseClasses.Messages.KEY_FILE_TYPE);
+        mGridView = (GridView)findViewById(R.id.friendsGrid);
+        mGridView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        mGridView.setOnItemClickListener(mOnItemClickListener);
+
+        mMediaUri = getIntent().getData();
+        mTipoArchivo = getIntent().getStringExtra(Constantes.ParseClasses.Messages.KEY_FILE_TYPE);
+
+        TextView emptyTextView = (TextView)findViewById(android.R.id.empty);
+        mGridView.setEmptyView(emptyTextView);
     }
 
 
@@ -77,7 +86,7 @@ public class RecipientsActivity extends ListActivity {
         if (id == R.id.action_send) {
             ParseObject message = createMessage(mMediaUri, mTipoArchivo);
             if (message != null) {
-                sendMessage(message);
+                send(message);
             } else {
                 //TODO AlertDialog mensaje error
             }
@@ -89,7 +98,7 @@ public class RecipientsActivity extends ListActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void sendMessage(ParseObject message) {
+    private void send(ParseObject message) {
         message.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
@@ -103,17 +112,13 @@ public class RecipientsActivity extends ListActivity {
     }
 
     private ParseObject createMessage(Uri mMediaUri, String mTipoArchivo) {
-        // Nombre del archivo
-        // Tipo de archivo (imagen o video)
-        // Id del recipiente o recipientes
-        // Nombre del receptor
-
-        ParseUser mCurrentUser = ParseUser.getCurrentUser();
         ParseObject message = new ParseObject(Constantes.ParseClasses.Messages.CLASS);
-        message.put(Constantes.ParseClasses.Messages.KEY_ID_SENDER, mCurrentUser.getObjectId());
-        message.put(Constantes.ParseClasses.Messages.KEY_SENDER_NAME, mCurrentUser.getUsername());
+        message.put(Constantes.ParseClasses.Messages.KEY_ID_SENDER, ParseUser.getCurrentUser().getObjectId());
+        message.put(Constantes.ParseClasses.Messages.KEY_SENDER_NAME, ParseUser.getCurrentUser().getUsername());
         message.put(Constantes.ParseClasses.Messages.KEY_ID_RECIPIENTS, getRecipientsIds());
+
         byte[] fileBytes = FileHelper.getByteArrayFromFile(this, mMediaUri);
+
         if (fileBytes != null) {
             // Si es una imagen la reducimos
             if (mTipoArchivo.equals(Constantes.FileTypes.IMAGE)) {
@@ -124,16 +129,19 @@ public class RecipientsActivity extends ListActivity {
             ParseFile pFile = new ParseFile(fileName, fileBytes);
             message.put(Constantes.ParseClasses.Messages.KEY_FILE, pFile);
             message.put(Constantes.ParseClasses.Messages.KEY_FILE_TYPE, mTipoArchivo);
+
+            return message;
         } else {
             // TODO implementar AlertDialog
+            return null;
         }
-        return message;
+
     }
 
     private ArrayList<String> getRecipientsIds() {
         ArrayList<String> recipients = new ArrayList<>();
-        for (int i = 0; i < getListView().getCount(); i++) {
-            if (getListView().isItemChecked(i)) {
+        for (int i = 0; i < mGridView.getCount(); i++) {
+            if (mGridView.isItemChecked(i)) {
                 recipients.add(mFriends.get(i).getObjectId());
             }
         }
@@ -143,41 +151,58 @@ public class RecipientsActivity extends ListActivity {
     @Override
     public void onResume() {
         super.onResume();
-        setListView();
+
         mCurrentUser = ParseUser.getCurrentUser();
         mFriendsRelation = mCurrentUser.getRelation(Constantes.Users.FRIENDS_RELATION);
+
         ParseQuery query = ParseUser.getQuery();
         query.orderByAscending(Constantes.Users.FIELD_USERNAME);
         spinner.setVisibility(View.VISIBLE);
         mFriendsRelation.getQuery().findInBackground(new FindCallback<ParseUser>() {
             @Override
-            public void done(List<ParseUser> users, ParseException e) {
+            public void done(List<ParseUser> friends, ParseException e) {
                 if (e == null) {
                     spinner.setVisibility(View.INVISIBLE);
-                    mFriends = users;
-                    for (ParseUser user : users) {
-                        adapter.add(user.getUsername());
+                    mFriends = friends;
+
+                    String[]usernames = new String[mFriends.size()];
+                    int i = 0;
+                    for (ParseUser user : mFriends) {
+                        usernames[i]=user.getUsername();
+                        i++;
+                    }
+                    if (mGridView.getAdapter() == null) {
+                        UserAdapter adapter = new UserAdapter(RecipientsActivity.this, mFriends);
+                        mGridView.setAdapter(adapter);
+                    } else {
+                        ((UserAdapter)mGridView.getAdapter()).refill(mFriends);
                     }
                 } else {
+                    //TODO Mostrar mensaje de dialogo
                     Log.e(TAG, "ParseException caught: ", e);
                 }
             }
         });
     }
 
-    private void setListView() {
-        usernames = new ArrayList<String>();
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, usernames);
-        setListAdapter(adapter);
-        getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-    }
+    protected OnItemClickListener mOnItemClickListener = new OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+            if (mGridView.getCheckedItemCount() > 0)
+                mSendMenuItem.setVisible(true);
+            else
+                mSendMenuItem.setVisible(false);
 
-    @Override
-    protected void onListItemClick(android.widget.ListView l, android.view.View v, int position, long id) {
-        super.onListItemClick(l, v, position, id);
-        if (l.getCheckedItemCount() > 0)
-            mSendMenuItem.setVisible(true);
-        else
-            mSendMenuItem.setVisible(false);
-    }
+            ImageView checkImageView = (ImageView)view.findViewById(R.id.checkImageView);
+            //compruebo si esta el usuario este pulsado o no y si esta maracdo lo añado
+            //sino lo borro
+            if (mGridView.isItemChecked(position)) {
+                // añado el receptor
+                checkImageView.setVisibility(View.VISIBLE);
+            } else {
+                // elimino el receptor
+                checkImageView.setVisibility(View.INVISIBLE);
+            }
+        }
+    };
 }

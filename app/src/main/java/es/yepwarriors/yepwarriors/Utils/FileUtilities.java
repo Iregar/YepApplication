@@ -1,4 +1,4 @@
-package es.yepwarriors.yepwarriors.Utils;
+package es.yepwarriors.yepwarriors.utils;
 
 import android.net.Uri;
 import android.os.Environment;

@@ -4,7 +4,7 @@
         <item name="colorControlNormal">@color/contrastColor</item>
         <item name="colorControlActivated">@color/contrastColor</item>
         <item name="android:listViewStyle">@style/LightPurpleBackground</item>
-        <item name="android:gridViewStyle">@style/LightPurpleBackground</item>
+        <item name="android:gridViewStyle">@style/LightPurpleBackground.GridView</item>
         <item name="actionOverflowButtonStyle">@style/AppTheme.OverFlow</item>
     </style>
 
@@ -14,6 +14,10 @@
 
     <style name="LightPurpleBackground">
         <item name="android:background">@color/light_purple_button</item>
+        <item name="android:divider">@null</item>
+    </style>
+    <style name="LightPurpleBackground.GridView">
+        <item name="android:padding">@dimen/user_grid_spacing</item>
     </style>
 
     <style name="_AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -91,7 +95,14 @@
         <item name="android:buttonStyle">?android:borderlessButtonStyle</item>
     </style>
 
-
+    <style name="GridImage">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:layout_alignParentTop">true</item>
+        <item name="android:scaleType">fitXY</item>
+        <item name="android:adjustViewBounds">true</item>
+    </style>
 
     <attr name="borderlessButtonStyle" format="reference" />
 </resources>

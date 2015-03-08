@@ -25,7 +25,7 @@ public class SignUpActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_up_activity);
+        setContentView(R.layout.activity_sign_up);
 //Para esconder el actionBar
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();

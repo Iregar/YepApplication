@@ -14,7 +14,7 @@ public class ShowImageActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_show_image);
+        setContentView(R.layout.activity_view_image);
 
         ImageView image = (ImageView)findViewById(R.id.imageView);
         Uri uriImage = getIntent().getData();

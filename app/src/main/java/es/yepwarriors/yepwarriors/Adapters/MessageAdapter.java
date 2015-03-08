@@ -1,4 +1,4 @@
-package es.yepwarriors.yepwarriors.Adapters;
+package es.yepwarriors.yepwarriors.adapters;
 
 import android.content.Context;
 import android.text.format.DateUtils;
@@ -14,7 +14,7 @@ import com.parse.ParseObject;
 import java.util.Date;
 import java.util.List;
 
-import es.yepwarriors.yepwarriors.Model.Constantes;
+import es.yepwarriors.yepwarriors.constants.Constantes;
 import es.yepwarriors.yepwarriors.R;
 
 

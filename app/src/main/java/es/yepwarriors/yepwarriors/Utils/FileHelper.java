@@ -1,4 +1,4 @@
-package es.yepwarriors.yepwarriors.Utils;
+package es.yepwarriors.yepwarriors.utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -14,7 +14,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
-import es.yepwarriors.yepwarriors.Model.Constantes;
+import es.yepwarriors.yepwarriors.constants.Constantes;
 
 
 public class FileHelper {

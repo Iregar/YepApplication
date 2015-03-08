@@ -20,8 +20,8 @@ import com.parse.ParseUser;
 import java.util.ArrayList;
 import java.util.List;
 
-import es.yepwarriors.yepwarriors.Model.Constantes;
-import es.yepwarriors.yepwarriors.Adapters.MessageAdapter;
+import es.yepwarriors.yepwarriors.constants.Constantes;
+import es.yepwarriors.yepwarriors.adapters.MessageAdapter;
 import es.yepwarriors.yepwarriors.R;
 import es.yepwarriors.yepwarriors.ShowImageActivity;
 
