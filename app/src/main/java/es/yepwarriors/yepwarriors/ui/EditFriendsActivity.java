@@ -31,11 +31,9 @@ public class EditFriendsActivity extends Activity {
     protected GridView mGridView;
     ProgressBar progressBar;
     List<ParseUser> mUsers;
-    ArrayList<String> username;
     UserAdapter adapter;
     ParseUser mCurrentUser;
     ParseRelation<ParseUser> mFriendsRelation;
-    ArrayList<String> ObjectsIds;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,30 +73,30 @@ public class EditFriendsActivity extends Activity {
         ParseQuery query = ParseUser.getQuery();
         query.orderByAscending(Constantes.Users.FIELD_USERNAME);
         query.setLimit(Constantes.Users.MAX_USERS);
-        //username = new ArrayList<String>();
-        //ObjectsIds = new ArrayList<String>();
-
-        //adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, username);
-        //setListAdapter(adapter);
 
         query.findInBackground(new FindCallback<ParseUser>() {
             @Override
             public void done(List<ParseUser> users, ParseException e) {
+                // Solo dejaremos que se cargue la lista de amigos en el caso de que no exista error (e==null)
                 if (e == null) {
-                    mUsers = users;
-
-                    String[] usernames = new String[mUsers.size()];
-                    int i = 0;
-                    for(ParseUser user : mUsers) {
-                        usernames[i] = user.getUsername();
-                        i++;
+                    List<ParseUser> userList = new ArrayList<ParseUser>();
+                    // Eliminamos el usuario qeu está logado para que no aparezca en la lista de amigos
+                    for(ParseUser user : users) {
+                        // Si el usuario logado es distinto que el usuario de la lista sobre el que iteramos
+                        // entonces lo añadiremos a la lista de usuarios a mostrar
+                        if (!mCurrentUser.getUsername().equals(user.getUsername())) {
+                            userList.add(user);
+                        }
                     }
+                    mUsers=userList;
                     if (mGridView.getAdapter() == null) {
+                        // Inicializamos la instancia del adaptador con la lista de usuarios a mostrar
                         adapter = new UserAdapter(EditFriendsActivity.this, mUsers);
                         mGridView.setAdapter(adapter);
                     } else {
                         ((UserAdapter)mGridView.getAdapter()).refill(mUsers);
                     }
+                    // Metodo que se encarga de marcar con check los amigos que ya tenemos añadidos (relaciones)
                     addFriendCheckmarks();
                     progressBar.setVisibility(View.INVISIBLE);
                 } else {

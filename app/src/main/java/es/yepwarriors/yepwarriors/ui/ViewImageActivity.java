@@ -1,4 +1,4 @@
-package es.yepwarriors.yepwarriors;
+package es.yepwarriors.yepwarriors.ui;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -8,8 +8,10 @@ import android.widget.ImageView;
 import android.net.Uri;
 import com.squareup.picasso.Picasso;
 
+import es.yepwarriors.yepwarriors.R;
 
-public class ShowImageActivity extends ActionBarActivity {
+
+public class ViewImageActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

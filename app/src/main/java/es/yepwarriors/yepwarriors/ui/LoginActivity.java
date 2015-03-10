@@ -74,7 +74,7 @@ public class LoginActivity extends ActionBarActivity {
                         // Una vez que el usuario se ha logado oculto ventana progreso
                         pDialog.dismiss();
                         if (parseUser != null) {
-                            Intent intent = new Intent(LoginActivity.this, MainActivityTabbed.class);
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);

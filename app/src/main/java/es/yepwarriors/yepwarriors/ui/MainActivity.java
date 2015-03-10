@@ -29,10 +29,10 @@ import es.yepwarriors.yepwarriors.adapters.SectionsPagerAdapter;
 import es.yepwarriors.yepwarriors.utils.FileUtilities;
 
 
-public class MainActivityTabbed extends ActionBarActivity implements ActionBar.TabListener {
+public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
 
 
-    private static final String TAG = MainActivityTabbed.class.getName();
+    private static final String TAG = MainActivity.class.getName();
     private final static int TAKE_PHOTO_REQUEST = 0;
     private final static int TAKE_VIDEO_REQUEST = 1;
     private final static int PICK_PHOTO_REQUEST = 2;
@@ -140,7 +140,7 @@ public class MainActivityTabbed extends ActionBarActivity implements ActionBar.T
         else if (id == R.id.sign_out) {
             ParseUser.logOut();
             Intent i = new Intent(
-                    MainActivityTabbed.this, LoginActivity.class);
+                    MainActivity.this, LoginActivity.class);
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(i);
@@ -231,11 +231,11 @@ public class MainActivityTabbed extends ActionBarActivity implements ActionBar.T
     }
 
     private void pickPhoto() {
-        Log.d(MainActivityTabbed.TAG, "Elige una foto");
+        Log.d(MainActivity.TAG, "Elige una foto");
 
         Intent choosePhotoIntent = new Intent(Intent.ACTION_GET_CONTENT);
         choosePhotoIntent.setType("image/*");
-        startActivityForResult(choosePhotoIntent, MainActivityTabbed.PICK_PHOTO_REQUEST);
+        startActivityForResult(choosePhotoIntent, MainActivity.PICK_PHOTO_REQUEST);
     }
 
     private void pickVideo() {

@@ -163,14 +163,15 @@ public class RecipientsActivity extends Activity {
             public void done(List<ParseUser> friends, ParseException e) {
                 if (e == null) {
                     spinner.setVisibility(View.INVISIBLE);
-                    mFriends = friends;
-
-                    String[]usernames = new String[mFriends.size()];
-                    int i = 0;
-                    for (ParseUser user : mFriends) {
-                        usernames[i]=user.getUsername();
-                        i++;
+                    List<ParseUser> friendsList = new ArrayList<ParseUser>();
+                    for(ParseUser friend : friends) {
+                        // Si el usuario logado es distinto que el usuario de la lista sobre el que iteramos
+                        // entonces lo añadiremos a la lista de usuarios a mostrar
+                        if (!mCurrentUser.getUsername().equals(friend.getUsername())) {
+                            friendsList.add(friend);
+                        }
                     }
+                    mFriends=friendsList;
                     if (mGridView.getAdapter() == null) {
                         UserAdapter adapter = new UserAdapter(RecipientsActivity.this, mFriends);
                         mGridView.setAdapter(adapter);

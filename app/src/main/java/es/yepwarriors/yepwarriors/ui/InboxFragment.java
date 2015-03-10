@@ -23,7 +23,6 @@ import java.util.List;
 import es.yepwarriors.yepwarriors.constants.Constantes;
 import es.yepwarriors.yepwarriors.adapters.MessageAdapter;
 import es.yepwarriors.yepwarriors.R;
-import es.yepwarriors.yepwarriors.ShowImageActivity;
 
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 
@@ -100,7 +99,7 @@ public class InboxFragment extends ListFragment {
         if (fileType.equals(Constantes.FileTypes.IMAGE)) {
             ParseFile file = message.getParseFile(Constantes.ParseClasses.Messages.KEY_FILE);
             Uri fileUri = Uri.parse(file.getUrl());
-            Intent intent = new Intent(getActivity(), ShowImageActivity.class);
+            Intent intent = new Intent(getActivity(), ViewImageActivity.class);
             intent.setData(fileUri);
             startActivity(intent);
         } else {

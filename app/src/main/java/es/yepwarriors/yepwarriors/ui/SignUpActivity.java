@@ -78,7 +78,7 @@ public class SignUpActivity extends ActionBarActivity {
                 public void done(ParseException e) {
                     if (e == null) {
 //abirmos la ventana principal
-                        Intent intent = new Intent(SignUpActivity.this, MainActivityTabbed.class);
+                        Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
 //para crear y luego borrar(siempre van asociadas) FLAG_ACTIVITY_NEW_TASK) y(intent.FLAG_ACTIVITY_CLEAR
 // una bandera para decirle al login que es la última actividad
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
