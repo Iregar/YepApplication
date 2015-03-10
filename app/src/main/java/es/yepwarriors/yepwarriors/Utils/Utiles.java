@@ -1,4 +1,4 @@
-package es.yepwarriors.yepwarriors;
+package es.yepwarriors.yepwarriors.utils;
 
 import android.app.AlertDialog;
 import android.content.Context;

@@ -14,7 +14,7 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 
 import es.yepwarriors.yepwarriors.R;
-import es.yepwarriors.yepwarriors.Utiles;
+import es.yepwarriors.yepwarriors.utils.Utiles;
 
 
 public class LoginActivity extends ActionBarActivity {
