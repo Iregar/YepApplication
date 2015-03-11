@@ -76,6 +76,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                     //estas logado
                 } else {
                     //error has metido mas el login
+                    //TODO Incluir un mensaje de dialogo
                 }
             }
         });
@@ -120,7 +121,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main_activity_tabbed, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
@@ -128,28 +129,28 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     //uso este metodo para cambiar la opcion setting por un icono para deslogarse
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent=null;
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        //Boton para deslogarse me he creado en el menu un sign_out y en Strings tb
-        else if (id == R.id.sign_out) {
-            ParseUser.logOut();
-            Intent i = new Intent(
-                    MainActivity.this, LoginActivity.class);
-            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(i);
-            return true;
-        } else if (id == R.id.action_edit_friends) {
-            Intent intent = new Intent(this, EditFriendsActivity.class);
-            startActivity(intent);
-        } else if (id == R.id.action_camera) {
-            dialogCameraChoices();
+        switch(item.getItemId()){
+            case android.R.id.home:
+                return true;
+            case R.id.sign_out:
+                ParseUser.logOut();
+                intent = new Intent(
+                        MainActivity.this, LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                return true;
+            case R.id.action_edit_friends:
+                intent = new Intent(this, EditFriendsActivity.class);
+                //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            case R.id.action_camera:
+                dialogCameraChoices();
         }
 
         return super.onOptionsItemSelected(item);

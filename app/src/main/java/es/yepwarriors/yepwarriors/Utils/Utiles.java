@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 
 /**
  * Created by benjagarrido on 21/2/15.
+ * This method create an Error Dialog Message with input parameters
  */
 public class Utiles {
     public static void createErrorDialog(String message,String title, Context cont) {

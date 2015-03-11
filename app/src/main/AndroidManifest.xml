@@ -17,10 +17,6 @@
     <!-- Establecemos una nueva caracteristica que es poder acceder a la camara -->
     <uses-feature android:name="android.hardware.camera2" />
 
-    <!--
-      IMPORTANT: Change "com.parse.starter.permission.C2D_MESSAGE" in the lines below
-      to match your app's package name + ".permission.C2D_MESSAGE".
-    -->
     <permission android:protectionLevel="signature"
         android:name="es.yepwarriors.yepwarriors.permission.C2D_MESSAGE" />
     <uses-permission android:name="es.yepwarriors.yepwarriors.permission.C2D_MESSAGE" />
@@ -31,54 +27,83 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-
         <!-- Establecemos las actividades que componen nuestra aplicación para que puedan ser llamadas -->
+        <!-- ************** -->
+        <!-- Actividad Main -->
+        <!-- ************** -->
         <activity
             android:name=".ui.MainActivity"
             android:label="@string/app_name"
             android:logo="@drawable/ic_launcher" >
-
             <!-- El filtro que añadimos a continuación es necesario para identificar que esta será la primera actividad que lanzaremos -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- *************** -->
+        <!-- Actividad Login -->
+        <!-- *************** -->
         <activity
             android:name=".ui.LoginActivity"
             android:label="@string/title_activity_login"
             android:screenOrientation="portrait" />
+        <!-- **************** -->
+        <!-- Actividad SignUp -->
+        <!-- **************** -->
         <activity
             android:name=".ui.SignUpActivity"
-            android:label="@string/title_activity_login"
+            android:label="@string/title_activity_signup"
             android:parentActivityName=".ui.LoginActivity"
             android:screenOrientation="portrait" />
+        <!-- ********************* -->
+        <!-- Actividad EditFriends -->
+        <!-- ********************* -->
         <activity
             android:name=".ui.EditFriendsActivity"
             android:label="@string/title_activity_editaramigos"
             android:parentActivityName=".ui.MainActivity"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Holo.Light.DarkActionBar" >
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="es.yepwarriors.yepwarriors.ui.MainActivity" />
         </activity>
+        <!-- ******************** -->
+        <!-- Actividad Recipients -->
+        <!-- ******************** -->
         <activity
             android:name=".ui.RecipientsActivity"
             android:label="@string/title_activity_activity_recipients"
             android:parentActivityName=".ui.MainActivity"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Holo.Light.DarkActionBar" >
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="es.yepwarriors.yepwarriors.ui.MainActivity" />
         </activity>
+        <!-- ******************* -->
+        <!-- Actividad ViewImage -->
+        <!-- ******************* -->
         <activity
             android:name=".ui.ViewImageActivity"
             android:label="@string/title_activity_show_image"
             android:parentActivityName=".ui.MainActivity"
             android:screenOrientation="portrait" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="es.yepwarriors.yepwarriors.ui.MainActivity" />
         </activity>
+        <!-- ********************* -->
+        <!-- Actividad UserAdapter -->
+        <!-- ********************* -->
         <activity
             android:name=".adapters.UserAdapter"
             android:label="@string/title_activity_user_adapter" >
         </activity>
+        <!-- ************************************************************ -->
+        <!-- Incluimos el servicio necesario para las notificaciones PUSH -->
+        <!-- ************************************************************ -->
         <service android:name="com.parse.PushService" />
+        <meta-data android:name="com.parse.push.notification_icon" android:resource="@drawable/ic_launcher"/>
         <receiver android:name="com.parse.ParseBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -98,13 +123,9 @@
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-
-                <!--
-                  IMPORTANT: Change "com.parse.starter" to match your app's package name.
-                -->
                 <category android:name="es.yepwarriors.yepwarriors" />
             </intent-filter>
         </receiver>
     </application>
 
-</manifest> <!-- decimos quela actividad padre (parent) es LoginActivity -->
+</manifest>

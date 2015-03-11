@@ -27,6 +27,7 @@ public class Constantes {
             public static final String KEY_FILE_TYPE = "fileType";
             public static final String KEY_ID_RECIPIENTS = "idRecipients";
             public static final String KEY_CREATED_AT = "createdAt";
+            public static final String KEY_USER_ID="userId";
         }
     }
 }

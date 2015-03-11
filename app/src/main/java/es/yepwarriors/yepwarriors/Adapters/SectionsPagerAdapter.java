@@ -33,8 +33,6 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
             return  new FriendsFragment();
 
         }
-
-
     }
 
     @Override

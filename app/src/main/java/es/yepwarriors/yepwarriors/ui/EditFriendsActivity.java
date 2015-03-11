@@ -1,6 +1,8 @@
 package es.yepwarriors.yepwarriors.ui;
 
 import android.app.Activity;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -26,7 +28,9 @@ import es.yepwarriors.yepwarriors.adapters.UserAdapter;
 import es.yepwarriors.yepwarriors.constants.Constantes;
 import es.yepwarriors.yepwarriors.R;
 
-public class EditFriendsActivity extends Activity {
+import android.support.v7.app.ActionBarActivity;
+
+public class EditFriendsActivity extends ActionBarActivity {
     final static String TAG = EditFriendsActivity.class.getName();
     protected GridView mGridView;
     ProgressBar progressBar;
@@ -38,6 +42,11 @@ public class EditFriendsActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.rgb(130, 130, 130)));
+        getSupportActionBar().setStackedBackgroundDrawable(new ColorDrawable(Color.rgb(85,55,124)));
+
         setContentView(R.layout.user_grid);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
@@ -54,10 +63,9 @@ public class EditFriendsActivity extends Activity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch(item.getItemId()){
+            case android.R.id.home:
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }

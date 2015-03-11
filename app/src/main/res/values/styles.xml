@@ -4,20 +4,23 @@
         <item name="colorControlNormal">@color/contrastColor</item>
         <item name="colorControlActivated">@color/contrastColor</item>
         <item name="android:listViewStyle">@style/LightPurpleBackground</item>
-        <item name="android:gridViewStyle">@style/LightPurpleBackground.GridView</item>
+        <item name="android:gridViewStyle">@style/LightPurpleBackground</item>
         <item name="actionOverflowButtonStyle">@style/AppTheme.OverFlow</item>
     </style>
 
-    <style name="AppTheme.OverFlow" parent="android:Widget.ActionButton.Overflow">
+    <style name="AppTheme.OverFlow"
+        parent="android:Widget.ActionButton.Overflow">
         <item name="android:src">@drawable/ic_menu_overflow</item>
     </style>
 
     <style name="LightPurpleBackground">
-        <item name="android:background">@color/light_purple_button</item>
+        <item name="android:background">@color/light_purple_backgroud</item>
         <item name="android:divider">@null</item>
     </style>
-    <style name="LightPurpleBackground.GridView">
-        <item name="android:padding">@dimen/user_grid_spacing</item>
+
+
+    <style name="LightPurpleBackgroundButton">
+        <item name="android:background">@color/light_purple_button</item>
     </style>
 
     <style name="_AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -32,8 +35,7 @@
         <item name="android:contentDescription">@string/Imagedescription</item>
         <item name="android:layout_alignParentBottom">true</item>
         <item name="android:layout_alignParentLeft">true</item>
-        <item name="android:src">@drawable/background</item>
-        <!--<item name="android:layout_alignParentStart">true</item>-->
+        <item name="android:src">@drawable/yep_background</item>
     </style>
 
     <style name="AuthBackground">
@@ -44,7 +46,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">60sp</item>
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColor">@color/textcolor</item>
         <item name="android:layout_alignParentTop">true</item>
         <item name="android:layout_centerHorizontal">true</item>
         <item name="android:layout_marginTop">20dp</item>
@@ -56,7 +58,7 @@
         <item name="android:layout_below">@+id/tittle</item>
         <item name="android:layout_centerHorizontal">true</item>
         <item name="android:textSize">13sp</item>
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColor">@color/textcolor</item>
         <item name="android:layout_marginTop">0dp</item>
     </style>
 
@@ -87,7 +89,7 @@
     <style name="AuthButton">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@drawable/button_custom</item>
+        <item name="android:background">#F3AB42</item>
         <item name="android:layout_marginLeft">@dimen/activity_horizontal_margin</item>
         <item name="android:layout_marginRight">@dimen/activity_horizontal_margin</item>
         <item name="android:textSize">13sp</item>
@@ -103,8 +105,5 @@
         <item name="android:scaleType">fitXY</item>
         <item name="android:adjustViewBounds">true</item>
     </style>
-
     <attr name="borderlessButtonStyle" format="reference" />
 </resources>
-
-

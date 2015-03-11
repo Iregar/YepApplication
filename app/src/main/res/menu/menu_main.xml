@@ -1,0 +1,18 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="es.yepwarriors.yepwarriors.ui.MainActivity">
+
+    <item
+        android:id="@+id/action_edit_friends"
+        android:title="@string/add_friends"/>
+
+    <item
+        android:id="@+id/sign_out"
+        android:title="@string/action_logout" />
+
+    <item android:id="@+id/action_camera"
+        android:title="@string/option_camara"
+        android:icon="@drawable/ic_action_camera"
+        app:showAsAction="ifRoom"/>
+</menu>

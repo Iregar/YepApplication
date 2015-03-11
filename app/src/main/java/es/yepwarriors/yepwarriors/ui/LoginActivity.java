@@ -15,7 +15,7 @@ import com.parse.ParseUser;
 
 import es.yepwarriors.yepwarriors.R;
 import es.yepwarriors.yepwarriors.utils.Utiles;
-
+import es.yepwarriors.yepwarriors.YepApplication;
 
 public class LoginActivity extends ActionBarActivity {
 
@@ -70,10 +70,11 @@ public class LoginActivity extends ActionBarActivity {
         ParseUser.logInInBackground(sUsername, spassword,
                 new LogInCallback() {
                     @Override
-                    public void done(ParseUser parseUser, ParseException e) {
+                    public void done(ParseUser user, ParseException e) {
                         // Una vez que el usuario se ha logado oculto ventana progreso
                         pDialog.dismiss();
-                        if (parseUser != null) {
+                        if (e==null) {
+                            YepApplication.updateParseInstallation(user);
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);

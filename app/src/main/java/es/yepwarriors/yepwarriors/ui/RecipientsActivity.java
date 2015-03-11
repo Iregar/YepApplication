@@ -1,6 +1,8 @@
 package es.yepwarriors.yepwarriors.ui;
 
 import android.app.Activity;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,7 +21,9 @@ import android.widget.AdapterView.OnItemClickListener;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseInstallation;
 import com.parse.ParseObject;
+import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseRelation;
 import com.parse.ParseUser;
@@ -33,25 +37,30 @@ import es.yepwarriors.yepwarriors.constants.Constantes;
 import es.yepwarriors.yepwarriors.R;
 import es.yepwarriors.yepwarriors.utils.FileHelper;
 
+import android.support.v7.app.ActionBarActivity;
 
-public class RecipientsActivity extends Activity {
+public class RecipientsActivity extends ActionBarActivity {
 
     final static String TAG = RecipientsActivity.class.getName();
 
-    ParseUser mCurrentUser;
-    ParseRelation<ParseUser> mFriendsRelation;
-    ProgressBar spinner;
-    List<ParseUser> mFriends;
-    MenuItem mSendMenuItem;
-    private Uri mMediaUri;
-    private String mTipoArchivo;
+    protected ParseUser mCurrentUser;
+    protected ParseRelation<ParseUser> mFriendsRelation;
+    protected ProgressBar spinner;
+    protected List<ParseUser> mFriends;
+    protected MenuItem mSendMenuItem;
+    protected Uri mMediaUri;
+    protected String mTipoArchivo;
     protected GridView mGridView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.user_grid);
 
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.rgb(130, 130, 130)));
+        getSupportActionBar().setStackedBackgroundDrawable(new ColorDrawable(Color.rgb(85,55,124)));
+
+        setContentView(R.layout.user_grid);
         spinner = (ProgressBar) findViewById(R.id.progressBar);
 
         mGridView = (GridView)findViewById(R.id.friendsGrid);
@@ -69,7 +78,7 @@ public class RecipientsActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_activity_recipients, menu);
+        getMenuInflater().inflate(R.menu.menu_recipients, menu);
         // Como solo tenemos un elemento en el menú seleccionamos 0
         mSendMenuItem = menu.getItem(0);
         return true;
@@ -80,21 +89,19 @@ public class RecipientsActivity extends Activity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_send) {
-            ParseObject message = createMessage(mMediaUri, mTipoArchivo);
-            if (message != null) {
-                send(message);
-            } else {
-                //TODO AlertDialog mensaje error
-            }
+        switch(item.getItemId()){
+            case android.R.id.home:
+                return true;
+            case R.id.action_send:
+                ParseObject message = createMessage(mMediaUri, mTipoArchivo);
+                if (message != null) {
+                    send(message);
+                    // Finalizamos la actividad para que vuelva a la actividad padre
+                    finish();
+                } else {
+                    //TODO AlertDialog mensaje error
+                }
         }
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -104,6 +111,7 @@ public class RecipientsActivity extends Activity {
             public void done(ParseException e) {
                 if(e==null){
                     Toast.makeText(RecipientsActivity.this,"Enviado Yujuuuuu!!!",Toast.LENGTH_SHORT).show();
+                    sendPushNotifications();
                 }else{
                     // TODO implementar AlertDialog
                 }
@@ -115,7 +123,7 @@ public class RecipientsActivity extends Activity {
         ParseObject message = new ParseObject(Constantes.ParseClasses.Messages.CLASS);
         message.put(Constantes.ParseClasses.Messages.KEY_ID_SENDER, ParseUser.getCurrentUser().getObjectId());
         message.put(Constantes.ParseClasses.Messages.KEY_SENDER_NAME, ParseUser.getCurrentUser().getUsername());
-        message.put(Constantes.ParseClasses.Messages.KEY_ID_RECIPIENTS, getRecipientsIds());
+        message.put(Constantes.ParseClasses.Messages.KEY_ID_RECIPIENTS, getRecipientIds());
 
         byte[] fileBytes = FileHelper.getByteArrayFromFile(this, mMediaUri);
 
@@ -138,7 +146,7 @@ public class RecipientsActivity extends Activity {
 
     }
 
-    private ArrayList<String> getRecipientsIds() {
+    private ArrayList<String> getRecipientIds() {
         ArrayList<String> recipients = new ArrayList<>();
         for (int i = 0; i < mGridView.getCount(); i++) {
             if (mGridView.isItemChecked(i)) {
@@ -180,6 +188,7 @@ public class RecipientsActivity extends Activity {
                     }
                 } else {
                     //TODO Mostrar mensaje de dialogo
+                    // Utiles.createErrorDialog(getString(R.string.ponDatos), getString(R.string.alert_login), LoginActivity.this);
                     Log.e(TAG, "ParseException caught: ", e);
                 }
             }
@@ -206,4 +215,15 @@ public class RecipientsActivity extends Activity {
             }
         }
     };
+
+    protected void sendPushNotifications(){
+        ParseQuery<ParseInstallation> query = ParseInstallation.getQuery();
+        query.whereContainedIn(Constantes.ParseClasses.Messages.KEY_USER_ID,getRecipientIds());
+
+        // Enviamos la notificacion push.
+        ParsePush push = new ParsePush();
+        push.setQuery(query);
+        push.setMessage(getString(R.string.push_message, ParseUser.getCurrentUser().getUsername()));
+        push.sendInBackground();
+    }
 }
