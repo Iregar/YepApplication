@@ -60,7 +60,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         if (currentUser == null) {
             // Creamos una Intent para abrir una activity
             Intent intent = new Intent(this, LoginActivity.class);
-
             // Para crear y luego borrar(siempre van asociadas) FLAG_ACTIVITY_NEW_TASK) y(intent.FLAG_ACTIVITY_CLEAR
             // una bandera para decirle al login que es la última actividad
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -149,8 +148,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
+                return true;
             case R.id.action_camera:
                 dialogCameraChoices();
+                return true;
         }
 
         return super.onOptionsItemSelected(item);

@@ -1,8 +1,8 @@
 <resources>
 
     <style name="AppTheme" parent="@style/_AppTheme">
-        <item name="colorControlNormal">@color/contrastColor</item>
-        <item name="colorControlActivated">@color/contrastColor</item>
+        <item name="colorControlNormal">@color/contrast_color</item>
+        <item name="colorControlActivated">@color/contrast_color</item>
         <item name="android:listViewStyle">@style/LightPurpleBackground</item>
         <item name="android:gridViewStyle">@style/LightPurpleBackground</item>
         <item name="actionOverflowButtonStyle">@style/AppTheme.OverFlow</item>
@@ -46,7 +46,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">60sp</item>
-        <item name="android:textColor">@color/textcolor</item>
+        <item name="android:textColor">@color/text_color</item>
         <item name="android:layout_alignParentTop">true</item>
         <item name="android:layout_centerHorizontal">true</item>
         <item name="android:layout_marginTop">20dp</item>
@@ -58,7 +58,7 @@
         <item name="android:layout_below">@+id/tittle</item>
         <item name="android:layout_centerHorizontal">true</item>
         <item name="android:textSize">13sp</item>
-        <item name="android:textColor">@color/textcolor</item>
+        <item name="android:textColor">@color/text_color</item>
         <item name="android:layout_marginTop">0dp</item>
     </style>
 
@@ -89,11 +89,11 @@
     <style name="AuthButton">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">#F3AB42</item>
+        <item name="android:background">@drawable/button_custom</item>
         <item name="android:layout_marginLeft">@dimen/activity_horizontal_margin</item>
         <item name="android:layout_marginRight">@dimen/activity_horizontal_margin</item>
         <item name="android:textSize">13sp</item>
-        <item name="android:textColor">@color/text_color</item>
+        <item name="android:textColor">@color/text_color_button</item>
         <item name="android:buttonStyle">?android:borderlessButtonStyle</item>
     </style>
 

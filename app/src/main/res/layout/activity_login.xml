@@ -55,5 +55,5 @@
         android:layout_below="@+id/btnLogin"
         android:layout_marginTop="25dp"
         android:text="@string/not_account"
-        android:textColor="@android:color/white" />
+        android:textColor="@color/text_color" />
 </RelativeLayout>
