@@ -54,7 +54,7 @@ public class SignUpActivity extends ActionBarActivity {
                 public void done(ParseException e) {
                     if (e == null) {
                         //abirmos la ventana principal
-                        YepApplication.updateParseInstallation(ParseUser.getCurrentUser());
+                        // YepApplication.updateParseInstallation(ParseUser.getCurrentUser());
                         Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
                         //para crear y luego borrar(siempre van asociadas) FLAG_ACTIVITY_NEW_TASK) y(intent.FLAG_ACTIVITY_CLEAR
                         // una bandera para decirle al login que es la última actividad

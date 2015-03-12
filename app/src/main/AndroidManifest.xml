@@ -103,19 +103,10 @@
         <!-- Incluimos el servicio necesario para las notificaciones PUSH -->
         <!-- ************************************************************ -->
         <service android:name="com.parse.PushService" />
-        <meta-data android:name="com.parse.push.notification_icon" android:resource="@drawable/ic_launcher"/>
         <receiver android:name="com.parse.ParseBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.USER_PRESENT" />
-            </intent-filter>
-        </receiver>
-        <receiver android:name="com.parse.ParsePushBroadcastReceiver"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.parse.push.intent.RECEIVE" />
-                <action android:name="com.parse.push.intent.DELETE" />
-                <action android:name="com.parse.push.intent.OPEN" />
             </intent-filter>
         </receiver>
         <receiver android:name="com.parse.GcmBroadcastReceiver"
@@ -123,7 +114,17 @@
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+                <!--
+                IMPORTANT: Change "com.parse.tutorials.pushnotifications" to match your app's package name.
+                -->
                 <category android:name="es.yepwarriors.yepwarriors" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="com.parse.ParsePushBroadcastReceiver" android:exported="false">
+            <intent-filter>
+                <action android:name="com.parse.push.intent.RECEIVE" />
+                <action android:name="com.parse.push.intent.DELETE" />
+                <action android:name="com.parse.push.intent.OPEN" />
             </intent-filter>
         </receiver>
     </application>

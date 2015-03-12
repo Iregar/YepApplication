@@ -17,10 +17,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.parse.ParseUser;
+import com.parse.ParseAnalytics;
+import com.parse.ParsePush;
+import com.parse.SaveCallback;
+import com.parse.ParseException;
 
 import java.io.IOException;
 import java.io.InputStream;
 
+import es.yepwarriors.yepwarriors.YepApplication;
 import es.yepwarriors.yepwarriors.constants.Constantes;
 import es.yepwarriors.yepwarriors.R;
 import es.yepwarriors.yepwarriors.adapters.SectionsPagerAdapter;
@@ -44,9 +49,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         // Establecemos el layout asociado a esta actividad
         setContentView(R.layout.activity_main);
-
+        // Track app opens.
+        ParseAnalytics.trackAppOpened(getIntent());
         ParseUser currentUser = ParseUser.getCurrentUser();
 
         // El código a continuación nos permite personalizar el acitionBar.
@@ -124,6 +131,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             case android.R.id.home:
                 return true;
             case R.id.sign_out:
+                // YepApplication.updateParseInstallation(null);
                 // Hemos seleccionado salir de la app
                 ParseUser.logOut();
                 intent = new Intent(

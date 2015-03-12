@@ -116,7 +116,7 @@ public class RecipientsActivity extends ActionBarActivity {
             public void done(ParseException e) {
                 if(e==null){
                     Toast.makeText(RecipientsActivity.this,"Enviado Yujuuuuu!!!",Toast.LENGTH_SHORT).show();
-                    sendPushNotifications();
+                    //sendPushNotifications();
                 }else{
                     // TODO implementar AlertDialog
                 }
@@ -152,13 +152,13 @@ public class RecipientsActivity extends ActionBarActivity {
     }
 
     private ArrayList<String> getRecipientIds() {
-        ArrayList<String> recipients = new ArrayList<>();
+        ArrayList<String> recipientIds = new ArrayList<>();
         for (int i = 0; i < mGridView.getCount(); i++) {
             if (mGridView.isItemChecked(i)) {
-                recipients.add(mFriends.get(i).getObjectId());
+                recipientIds.add(mFriends.get(i).getObjectId());
             }
         }
-        return recipients;
+        return recipientIds;
     }
 
     @Override
@@ -221,7 +221,7 @@ public class RecipientsActivity extends ActionBarActivity {
         }
     };
 
-    protected void sendPushNotifications(){
+    /*protected void sendPushNotifications(){
         ParseQuery<ParseInstallation> query = ParseInstallation.getQuery();
         query.whereContainedIn(Constantes.ParseClasses.Messages.KEY_USER_ID,getRecipientIds());
 
@@ -230,5 +230,5 @@ public class RecipientsActivity extends ActionBarActivity {
         push.setQuery(query);
         push.setMessage(getString(R.string.push_message, ParseUser.getCurrentUser().getUsername()));
         push.sendInBackground();
-    }
+    }*/
 }
