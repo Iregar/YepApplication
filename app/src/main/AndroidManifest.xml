@@ -19,7 +19,7 @@
 
     <permission android:protectionLevel="signature"
         android:name="es.yepwarriors.yepwarriors.permission.C2D_MESSAGE" />
-    <uses-permission android:name="es.yepwarriors.yepwarriors.permission.C2D_MESSAGE" />
+    <uses-permission android:name="com.parse.tutorials.pushnotifications.permission.C2D_MESSAGE" />
 
     <application
         android:name=".YepApplication"

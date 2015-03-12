@@ -131,7 +131,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             case android.R.id.home:
                 return true;
             case R.id.sign_out:
-                // YepApplication.updateParseInstallation(null);
+                YepApplication.updateParseInstallation(null);
                 // Hemos seleccionado salir de la app
                 ParseUser.logOut();
                 intent = new Intent(

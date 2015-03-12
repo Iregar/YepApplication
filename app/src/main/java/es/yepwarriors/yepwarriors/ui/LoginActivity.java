@@ -81,7 +81,7 @@ public class LoginActivity extends ActionBarActivity {
                         pDialog.dismiss();
                         if (e==null) {
                             // Actualizamos la instalacion para el uso de notificaciones push
-                            //YepApplication.updateParseInstallation(user);
+                            YepApplication.updateParseInstallation(user);
                             // Si nos hemos logado correctamente deberemos pasar a la clase main
                             // o lo que es lo mismo, iniciar la actividad correspondientes (mainActivity.class)
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);

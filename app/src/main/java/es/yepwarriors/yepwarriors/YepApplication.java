@@ -28,7 +28,8 @@ public class YepApplication extends Application {
         Parse.initialize(this, "cgXn33mBRQ7HPq7nLZDDfHkNhAxVOYR9w35FsWQg", "ky8hxjuA374Q7cuGyP743S8PaDzd5Oyejorcuy9w");
 
         PushService.setDefaultPushCallback(this, MainActivity.class,R.drawable.ic_stat_ic_launcher);
-        ParsePush.subscribeInBackground("", new SaveCallback() {
+        ParseInstallation.getCurrentInstallation().saveInBackground();
+        /*ParsePush.subscribeInBackground("", new SaveCallback() {
             @Override
             public void done(ParseException e) {
                 if (e == null) {
@@ -37,10 +38,10 @@ public class YepApplication extends Application {
                     Log.e("com.parse.push", "failed to subscribe for push", e);
                 }
             }
-        });
-        //ParseInstallation.getCurrentInstallation().saveInBackground();
+        });*/
+
     }
-    /*public static void updateParseInstallation (ParseUser user){
+    public static void updateParseInstallation (ParseUser user){
         ParseInstallation installation = ParseInstallation.getCurrentInstallation();
         if (user==null){
             installation.remove(Constantes.ParseClasses.Messages.KEY_USER_ID);
@@ -48,5 +49,5 @@ public class YepApplication extends Application {
             installation.put(Constantes.ParseClasses.Messages.KEY_USER_ID,user.getObjectId());
         }
         installation.saveInBackground();
-    }*/
+    }
 }
