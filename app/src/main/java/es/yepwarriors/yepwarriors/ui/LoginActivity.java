@@ -19,47 +19,53 @@ import es.yepwarriors.yepwarriors.YepApplication;
 
 public class LoginActivity extends ActionBarActivity {
 
-    //me creo una variable para recoger el Textview
+    // Creamos las variables que utilizaremos a lo largo de la lógica
     protected TextView mSignednUpTextview;
-
-    EditText username;
-    EditText password;
+    protected EditText mUsername;
+    protected EditText mPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        //Para esconder el actionBar en el que nos aparece el nombre de la aplicacion
+        // Al ser la ventana principal no queremos que aparezca la actionBar
         ActionBar actionBar = getSupportActionBar();
+        // Creamos una variable que la instancie y la ocultamos con hide()
         actionBar.hide();
 
-        username = (EditText) findViewById(R.id.txtUser);
-        password = (EditText) findViewById(R.id.txtPassword);
+        //
+        mUsername = (EditText) findViewById(R.id.txtUser);
+        mPassword = (EditText) findViewById(R.id.txtPassword);
 
-        //en esta variable lo asocio al boton de login
-
+        // Este campo es una instancia del "botón" que se pulsa en caso de no disponer de
+        // usuario (SIGN UP)
         mSignednUpTextview = (TextView) findViewById(R.id.txtNoAccount);
 
-        //me creo un escuchador
-
+        // Asociamos un escuchador y un eveno (en este caso el onClick)
         mSignednUpTextview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //me creo un intent para abrir la activity SignupActivity
-
+                // Indico la actividad que quiero iniciar, en este caso la que me permita
+                // crear un usuario (sign up)
                 Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+                // Inicio la actividad
                 startActivity(intent);
             }
         });
 
     }
 
-    // OnClick Listener botón login
+    /*
+    Este es el método asociado al onClickListener del botón login
+    es el encargado de realizar el logeo del usuario y de abrir el main
+    de la aplicación
+     */
     public void entrarLogin(View view) {
+        // Recogemos de las cajas de texto los datos de username y password
         // El método trim() quita los espacios entre las palabras
-        String sUsername = username.getText().toString().trim();
-        String spassword = password.getText().toString().trim();
+        String sUsername = mUsername.getText().toString().trim();
+        String spassword = mPassword.getText().toString().trim();
 
         // Ventana de progreso que se mostrará mientras se realiza el login
         final ProgressDialog pDialog =
@@ -74,12 +80,18 @@ public class LoginActivity extends ActionBarActivity {
                         // Una vez que el usuario se ha logado oculto ventana progreso
                         pDialog.dismiss();
                         if (e==null) {
+                            // Actualizamos la instalacion para el uso de notificaciones push
                             YepApplication.updateParseInstallation(user);
+                            // Si nos hemos logado correctamente deberemos pasar a la clase main
+                            // o lo que es lo mismo, iniciar la actividad correspondientes (mainActivity.class)
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            // Limpiamos las actividades previas de la pila e indicamos una nueva
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            // Iniciamos la actividad
                             startActivity(intent);
                         } else {
+                            // Creamos un cuadro de diálogo en el caso de que haya un error en el login (datos)
                             Utiles.createErrorDialog(getString(R.string.ponDatos), getString(R.string.alert_login), LoginActivity.this);
                         }
                     }

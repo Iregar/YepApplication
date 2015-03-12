@@ -16,8 +16,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.parse.LogInCallback;
-import com.parse.ParseException;
 import com.parse.ParseUser;
 
 import java.io.IOException;
@@ -39,9 +37,9 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     private final static int PICK_VIDEO_REQUEST = 3;
     private final static int LIMIT_DURATION_VIDEO = 10;
     private final static int QUALITY_VIDEO = 0;
-    Uri mMediaUri;
-    ViewPager mViewPager;
-    SectionsPagerAdapter mSectionsPagerAdapter;
+    protected Uri mMediaUri;
+    protected ViewPager mViewPager;
+    protected SectionsPagerAdapter mSectionsPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +48,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         setContentView(R.layout.activity_main);
 
         ParseUser currentUser = ParseUser.getCurrentUser();
-        //Esto es para personalizar el acitionbar de dentro de la app.
 
+        // El código a continuación nos permite personalizar el acitionBar.
+        // Incida si se muestra el botón volver habilitado
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        // Inica el icono asociado
         getSupportActionBar().setIcon(R.drawable.ic_launcher);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.rgb(130, 130, 130)));
         getSupportActionBar().setStackedBackgroundDrawable(new ColorDrawable(Color.rgb(85,55,124)));
@@ -60,25 +60,13 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         if (currentUser == null) {
             // Creamos una Intent para abrir una activity
             Intent intent = new Intent(this, LoginActivity.class);
-            // Para crear y luego borrar(siempre van asociadas) FLAG_ACTIVITY_NEW_TASK) y(intent.FLAG_ACTIVITY_CLEAR
+            // Para crear y luego borrar(siempre van asociadas) FLAG_ACTIVITY_NEW_TASK) y (intent.FLAG_ACTIVITY_CLEAR
             // una bandera para decirle al login que es la última actividad
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             // La incializamos con el metodo startActivity
             startActivity(intent);
         }
-
-        ParseUser.logInInBackground("Usuario", "contrasela", new LogInCallback() {
-            @Override
-            public void done(ParseUser parseUser, ParseException e) {
-                if (parseUser != null) {
-                    //estas logado
-                } else {
-                    //error has metido mas el login
-                    //TODO Incluir un mensaje de dialogo
-                }
-            }
-        });
 
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
@@ -126,7 +114,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     @Override
 
-    //uso este metodo para cambiar la opcion setting por un icono para deslogarse
+    // Este evento se ejecuta cada vez que seleccionamos una opción de menú.
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent=null;
         // Handle action bar item clicks here. The action bar will
@@ -136,6 +124,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             case android.R.id.home:
                 return true;
             case R.id.sign_out:
+                // Hemos seleccionado salir de la app
                 ParseUser.logOut();
                 intent = new Intent(
                         MainActivity.this, LoginActivity.class);
@@ -144,12 +133,12 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 startActivity(intent);
                 return true;
             case R.id.action_edit_friends:
+                // Hemos seleccionado la opción editar amigos
                 intent = new Intent(this, EditFriendsActivity.class);
-                //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
                 return true;
             case R.id.action_camera:
+                // Hemos seleccionado la opción cámara
                 dialogCameraChoices();
                 return true;
         }
@@ -157,6 +146,9 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         return super.onOptionsItemSelected(item);
     }
 
+    /*
+    Este método se encarga de mostrar las diferentes opciones de la cámara
+     */
     private void dialogCameraChoices() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setItems(R.array.camera_choices, mDialogListener());
@@ -164,6 +156,9 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         dialog.show();
     }
 
+    /*
+    Método asociado al cuadro de dialogo con las opciones de camara y asociado al onClickListener
+     */
     private DialogInterface.OnClickListener mDialogListener() {
 
         return new DialogInterface.OnClickListener() {
@@ -270,10 +265,12 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     @Override
     public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+
     }
 
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+
     }
 
     @Override

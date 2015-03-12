@@ -28,12 +28,7 @@ public class YepApplication extends Application {
     }
     public static void updateParseInstallation (ParseUser user){
         ParseInstallation installation = ParseInstallation.getCurrentInstallation();
-        //installation.put(Constantes.ParseClasses.Messages.KEY_USER_ID,user.getObjectId());
-        if (user == null) {
-            installation.remove(Constantes.ParseClasses.Messages.KEY_USER_ID);
-        } else {
-            installation.put(Constantes.ParseClasses.Messages.KEY_USER_ID, ParseUser.getCurrentUser());
-        }
+        installation.put(Constantes.ParseClasses.Messages.KEY_USER_ID,user.getObjectId());
         installation.saveInBackground();
     }
 }
