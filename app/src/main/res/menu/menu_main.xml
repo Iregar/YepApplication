@@ -4,6 +4,10 @@
     tools:context="es.yepwarriors.yepwarriors.ui.MainActivity">
 
     <item
+        android:id="@+id/action_edit_user"
+        android:title="@string/edit_current_user"/>
+
+    <item
         android:id="@+id/action_edit_friends"
         android:title="@string/add_friends"/>
 

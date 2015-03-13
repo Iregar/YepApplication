@@ -1,0 +1,70 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="es.yepwarriors.yepwarriors.ui.EditCurrentUserActivity">
+
+    <LinearLayout
+        android:id="@+id/editTextLayout"
+        style="@style/AuthFieldContainer">
+
+        <EditText
+            android:id="@+id/txtName"
+            style="@style/AuthEditText"
+            android:hint="@string/username_hint">
+            <requestFocus />
+        </EditText>
+
+        <EditText
+            android:id="@+id/txtSecondName"
+            style="@style/AuthEditText"
+            android:hint="@string/usersecondname_hint">
+        </EditText>
+
+        <EditText
+            android:id="@+id/txtTelephone"
+            style="@style/AuthEditText"
+            android:hint="@string/telephone_hint"
+            android:inputType="phone">
+        </EditText>
+
+        <EditText
+            android:id="@+id/txtBirthDay"
+            style="@style/AuthEditText"
+            android:hint="@string/birthday_hint">
+        </EditText>
+
+        <EditText
+            android:id="@+id/txtEmail"
+            style="@style/AuthEditText"
+            android:hint="@string/email_registros"
+            android:inputType="textEmailAddress" />
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/btnDivider"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextLayout"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/button_divider"
+        android:contentDescription="@string/button_divider" />
+
+    <Button
+        android:id="@+id/btnSave"
+        style="@style/AuthButton"
+        android:text="@string/save_button"
+        android:layout_below="@+id/editTextLayout"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/btnDivider"
+        android:layout_marginRight="0px" />
+
+    <Button
+        android:id="@+id/btnCancel"
+        style="@style/AuthButton"
+        android:onClick="cancel"
+        android:text="@string/cancel_button"
+        android:layout_below="@+id/editTextLayout"
+        android:layout_toRightOf="@+id/btnDivider"
+        android:layout_marginLeft="0px"
+        android:nestedScrollingEnabled="true" />
+</RelativeLayout>

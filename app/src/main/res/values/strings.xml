@@ -1,54 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="title_activity_main_activity_tabbed">MainActivityTabbed</string>
+    <string name="app_name">Yep!</string>
+
+    <!-- TITULO DE LAS ACTIVIDADES (se muestra en el actionBar) -->
+    <string name="title_activity_main_activity_tabbed">Main</string>
     <string name="title_activity_signup">Sign Up</string>
     <string name="title_activity_editaramigos">Select your friends</string>
     <string name="title_activity_activity_recipients">Select Recipients</string>
     <string name="title_activity_show_image">Show Image</string>
     <string name="title_activity_user_adapter">User Adapter</string>
     <string name="title_activity_login">Login</string>
+    <string name="title_activity_edit_current_user">Edit Current User</string>
 
-    <string name="app_name">Yep!</string>
-    <string name="action_logout">Logout</string>
-    <string name="title_section1">Messages</string>
-    <string name="title_section2">Friends</string>
-    <string name="Username_hint">Username</string>
+    <!-- BOTONES -->
     <string name="singin_button">SING IN</string>
+    <string name="save_button">SAVE</string>
     <string name="signup_button">SIGN UP</string>
     <string name="cancel_button">CANCEL</string>
+
+    <!-- ACCIONES U OPCIONES DE MENU-->
+    <string name="action_logout">Logout</string>
+    <string name="option_camara">Cámara</string>
+    <string name="edit_current_user">"Edit User"</string>
+
+    <!-- HINT DE CAMPOS DE TEXTO -->
     <string name="username_hint">username</string>
     <string name="password_hint">password</string>
-    <string name="email_registros">email</string>
+    <string name="Username_hint">username</string>
+    <string name="usersecondname_hint">second name</string>
+    <string name="telephone_hint">telephone</string>
+    <string name="birthday_hint">birthday</string>
     <string name="mailHint">type your mail</string>
-    <string name="signupText">signup area text</string>
-    <string name="not_account">Do you not have an account?</string>
-    <string name="Imagedescription">Yep</string>
+
+    <!-- SECCIONES -->
+    <string name="title_section1">Messages</string>
+    <string name="title_section2">Friends</string>
+
+    <!-- PARA MENSAJES INFORMATIVOS O DE ERROR -->
+    <string name="alert_login">Login Error</string>
+    <string name="alert_signup">Sign Up Error</string>
     <string name="empty_field_message">Complete all fields</string>
     <string name="dialog_error_title">Error</string>
     <string name="loging_message">Logueando</string>
     <string name="waiting_message">Please wait</string>
     <string name="ponDatos">The user or password are incorrect</string>
-    <string name="App_subtittle">A new comunication concept!</string>
-    <string name="MensajeFriends">Add friends to start</string>
-    <string name="Editaramigos">Edit friends</string>
-    <string name="desc_imagen_background">Image background</string>
-    <string name="button_divider">Button divider</string>
-    <string name="option_camara">Cámara</string>
     <string name="empty_friends">You don´t have friends</string>
     <string name="empty_messages">You don´t have messages</string>
-    <string name="action_send">Send Friends</string>
-    <string name="add_friends">Edit Friends</string>
+
+    <!-- OPCIONES DEL ICONO CAMARA -->
     <string-array name="camera_choices">
         <item>Take a picture</item>
         <item>Take a video</item>
         <item>Pick a picture</item>
         <item>Pick a video</item>
     </string-array>
-    <string name="alert_login">Login Error</string>
-    <string name="alert_signup">Sign Up Error</string>
+
+
+
+
+    <string name="email_registros">email</string>
+    <string name="signupText">signup area text</string>
+    <string name="not_account">Do you not have an account?</string>
+    <string name="Imagedescription">Yep</string>
+    <string name="App_subtittle">A new comunication concept!</string>
+    <string name="MensajeFriends">Add friends to start</string>
+    <string name="Editaramigos">Edit friends</string>
+    <string name="desc_imagen_background">Image background</string>
+    <string name="button_divider">Button divider</string>
+    <string name="action_send">Send Friends</string>
+    <string name="add_friends">Edit Friends</string>
     <string name="imagen">imagen</string>
     <string name="content_desc_user_avatar">User avatar</string>
     <string name="content_desc_user_checkmark">User checkmark</string>
     <string name="push_message">You have a new Yep message from %s</string>
-
 </resources>

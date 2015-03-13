@@ -150,6 +150,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 // Hemos seleccionado la opción cámara
                 dialogCameraChoices();
                 return true;
+            case R.id.action_edit_user:
+                // Hemos seleccionado la opción editar amigos
+                intent = new Intent(this, EditCurrentUserActivity.class);
+                startActivity(intent);
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
