@@ -105,6 +105,20 @@ public class InboxFragment extends ListFragment {
         } else {
             //Intent intent = new Intent(Intent.ACTION_VIEW);
         }
+
+        // Una vez que el mensaje es leído
+        List <String> ids = message.getList(Constantes.ParseClasses.Messages.KEY_ID_RECIPIENTS);
+        if(ids.size()>1){
+            // Borrar el receptor de la lista
+            ids.remove(ParseUser.getCurrentUser().getObjectId());
+            ArrayList<String> idsToRemove = new ArrayList<>();
+            idsToRemove.add(ParseUser.getCurrentUser().getObjectId());
+            message.removeAll(Constantes.ParseClasses.Messages.KEY_ID_RECIPIENTS,idsToRemove);
+            message.saveInBackground();
+        }else{
+            // Ultimo receptor, borar el mensaje de la lista
+            message.deleteInBackground();
+        }
     }
 
     protected OnRefreshListener mOnRefreshListener =new OnRefreshListener(){

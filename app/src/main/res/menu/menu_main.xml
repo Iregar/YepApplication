@@ -13,6 +13,6 @@
 
     <item android:id="@+id/action_camera"
         android:title="@string/option_camara"
-        android:icon="@drawable/ic_action_camera"
+        android:icon="@drawable/ic_menu_camera"
         app:showAsAction="ifRoom"/>
 </menu>

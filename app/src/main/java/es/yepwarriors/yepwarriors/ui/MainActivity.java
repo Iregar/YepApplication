@@ -61,8 +61,9 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         // Inica el icono asociado
         getSupportActionBar().setIcon(R.drawable.ic_launcher);
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.rgb(130, 130, 130)));
-        getSupportActionBar().setStackedBackgroundDrawable(new ColorDrawable(Color.rgb(85,55,124)));
+        getSupportActionBar().setTitle("");
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.rgb(250,250,210)));
+        getSupportActionBar().setStackedBackgroundDrawable(new ColorDrawable(Color.rgb(255,199,0)));
 
         if (currentUser == null) {
             // Creamos una Intent para abrir una activity

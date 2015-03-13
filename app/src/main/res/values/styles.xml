@@ -14,7 +14,7 @@
     </style>
 
     <style name="LightPurpleBackground">
-        <item name="android:background">@color/light_purple_backgroud</item>
+        <item name="android:background">@color/light_background</item>
         <item name="android:divider">@null</item>
     </style>
 
@@ -81,7 +81,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_above">@+id/txtPassword</item>
-        <item name="android:textColorHint">@color/light_gray</item>
+        <item name="android:textColorHint">@color/light_purple_button</item>
         <item name="android:textSize">17sp</item>
         <item name="android:background">@drawable/apptheme_edit_text_holo_light</item>
     </style>

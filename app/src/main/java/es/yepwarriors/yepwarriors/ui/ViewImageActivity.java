@@ -2,7 +2,9 @@ package es.yepwarriors.yepwarriors.ui;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.net.Uri;
@@ -13,6 +15,8 @@ import es.yepwarriors.yepwarriors.R;
 
 public class ViewImageActivity extends ActionBarActivity {
 
+    protected static long DELAY = 5000;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,6 +25,14 @@ public class ViewImageActivity extends ActionBarActivity {
         ImageView image = (ImageView)findViewById(R.id.imageView);
         Uri uriImage = getIntent().getData();
         Picasso.with(this).load(uriImage.toString()).into(image);
+
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                finish();
+            }
+        },DELAY);
     }
 
     @Override
