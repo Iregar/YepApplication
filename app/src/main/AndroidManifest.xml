@@ -15,7 +15,7 @@
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
     <!-- Establecemos una nueva caracteristica que es poder acceder a la camara -->
-    <uses-feature android:name="android.hardware.camera2" />
+    <uses-feature android:name="android.hardware.camera" />
 
     <permission
         android:name="es.yepwarriors.yepwarriors.permission.C2D_MESSAGE"
@@ -121,7 +121,6 @@
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-<!--                 IMPORTANT: Change "com.parse.tutorials.pushnotifications" to match your app's package name. -->
                 <category android:name="es.yepwarriors.yepwarriors" />
             </intent-filter>
         </receiver>
