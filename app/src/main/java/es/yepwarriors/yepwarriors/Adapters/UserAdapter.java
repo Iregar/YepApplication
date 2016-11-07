@@ -19,6 +19,7 @@ import es.yepwarriors.yepwarriors.R;
 public class UserAdapter extends ArrayAdapter<ParseUser> {
     protected Context mContext;
     protected List<ParseUser> mUsers;
+
     public UserAdapter(Context context, List<ParseUser> users){
         super(context, R.layout.message_item, users);
         mContext = context;

@@ -97,13 +97,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="es.yepwarriors.yepwarriors.ui.MainActivity" />
         </activity>
-        <!-- ********************* -->
-        <!-- Actividad UserAdapter -->
-        <!-- ********************* -->
-        <activity
-            android:name=".adapters.UserAdapter"
-            android:label="@string/title_activity_user_adapter" >
-        </activity>
         <!-- ************************************************************ -->
         <!-- Incluimos el servicio necesario para las notificaciones PUSH -->
         <!-- ************************************************************ -->
